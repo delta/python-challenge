@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Course deregistration</title>
+</head>
+
+<body>
+  <h1>Course deregistration for NIT <span style="text-decoration: line-through;">Trichy</span></h1>
+  <p>
+    Please submit your deregistration information below. The rating and reason you give is absolutely confidential ;)
+  </p>
+  <div class="container">
+    <form>
+      <label for="name">Name</label><br>
+      <input type="text" id="name" name="name"><br>
+      <label for="rollno">Roll number</label><br>
+      <input type="text" id="rollno" name="rollno"><br>
+      <label for="course">Course code</label><br>
+      <input type="text" id="course" name="course"><br>
+      <label for="rating">Rating for prof out of 10</label><br>
+      <input type="number" name="rating"><br>
+      <label for="reason">Reason for deregistration</label><br>
+      <select>
+        <option value="1">Prof is rolling dice to put grade for me</option>
+        <option value="2">It is not my favorite course</option>
+        <option value="3">Even prof is not sure about the answers in exams</option>
+        <option value="4">I don't know what to do in this course</option>
+        <option value="5">Prof takes 3 classes but says he took 30 classes in CCM</option>
+        <option value="6">Extra sheets are not provided for the CTs in this course</option>
+        <option value="7">Prof thinks 0 is not an integer</option>
+        <option value="8">I dont want to say my reason because I'm still afraid it will affect my CGPA</option>
+      </select><br><br>
+      <input type="submit" value="Submit">
+    </form>
+  </div>
+</body>
+
+</html>
