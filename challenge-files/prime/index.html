@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <script src="https://code.jquery.com/jquery-latest.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery.terminal/js/jquery.terminal.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/jquery.terminal/css/jquery.terminal.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.20.0/full/pyodide.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/jquery.terminal@2.32.0/css/jquery.terminal.min.css" rel="stylesheet" />
+</head>
+<style>
+    html,
+    body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    #container {
+        display: flex;
+        flex-direction: row;
+        height: 100%;
+    }
+
+    #content {
+        background-color: azure;
+        flex: 1;
+        overflow: auto;
+        padding: 1rem;
+    }
+
+    #pyodide-container {
+        flex: 1;
+        overflow: auto;
+        --size: 1.5;
+        --color: rgba(255, 255, 255, 0.8);
+    }
+
+    @media (max-width: 768px) {
+        #container {
+            flex-direction: column;
+        }
+    }
+</style>
+
+<body>
+    <script type="text/javascript">
+        function sleep(s) {
+            return new Promise((resolve) => setTimeout(resolve, s));
+        }
+
+        async function main() {
+            globalThis.pyodide = await loadPyodide();
+            await pyodide.loadPackage("micropip");
+            await pyodide.runPythonAsync(
+                `
+            import micropip
+            await micropip.install(
+                './prime-1.0.0-py3-none-any.whl'
+            )
+            from prime.prime import *
+        `);
+            let namespace = pyodide.globals.get("dict")();
+            pyodide.runPython(
+                `
+            import sys
+            from pyodide import to_js
+            from pyodide.console import PyodideConsole, repr_shorten, BANNER
+            import __main__
+            BANNER = "Welcome to the Python Challenge Terminal!\\n" + BANNER
+            pyconsole = PyodideConsole(__main__.__dict__)
+            import builtins
+            async def await_fut(fut):
+              res = await fut
+              if res is not None:
+                builtins._ = res
+              return to_js([res], depth=1)
+            def clear_console():
+              pyconsole.buffer = []
+        `,
+                { globals: namespace }
+            );
+            
+            let repr_shorten = namespace.get("repr_shorten");
+            let banner = namespace.get("BANNER");
+            let await_fut = namespace.get("await_fut");
+            let pyconsole = namespace.get("pyconsole");
+            let clear_console = namespace.get("clear_console");
+            namespace.destroy();
+
+            let ps1 = ">>> ",
+                ps2 = "... ";
+
+            async function lock() {
+                let resolve;
+                let ready = term.ready;
+                term.ready = new Promise((res) => (resolve = res));
+                await ready;
+                return resolve;
+            }
+
+            async function interpreter(command) {
+                let unlock = await lock();
+                term.pause();
+                for (const c of command.split("\n")) {
+                    let fut = pyconsole.push(c);
+                    term.set_prompt(fut.syntax_check === "incomplete" ? ps2 : ps1);
+                    switch (fut.syntax_check) {
+                        case "syntax-error":
+                            term.error(fut.formatted_error.trimEnd());
+                            continue;
+                        case "incomplete":
+                            continue;
+                        case "complete":
+                            break;
+                        default:
+                            throw new Error(`Unexpected type ${ty}`);
+                    }
+                    let wrapped = await_fut(fut);
+                    try {
+                        let [value] = await wrapped;
+                        if (value !== undefined) {
+                            term.echo(
+                                repr_shorten.callKwargs(value, {
+                                    separator: "\n[[;orange;]<long output truncated>]\n",
+                                })
+                            );
+                        }
+                        if (pyodide.isPyProxy(value)) {
+                            value.destroy();
+                        }
+                    } catch (e) {
+                        if (e.constructor.name === "PythonError") {
+                            const message = fut.formatted_error || e.message;
+                            term.error(message.trimEnd());
+                        } else {
+                            throw e;
+                        }
+                    } finally {
+                        fut.destroy();
+                        wrapped.destroy();
+                    }
+                }
+                term.resume();
+                await sleep(10);
+                unlock();
+            }
+
+            let term = $("#pyodide-container").terminal(interpreter, {
+                greetings: banner,
+                prompt: ps1,
+                completionEscape: false,
+                completion: function (command, callback) {
+                    callback(pyconsole.complete(command).toJs()[0]);
+                },
+                keymap: {
+                    "CTRL+C": async function (event, original) {
+                        clear_console();
+                        term.enter();
+                        term.echo("KeyboardInterrupt");
+                        term.set_command("");
+                        term.set_prompt(ps1);
+                    },
+                    TAB: (event, original) => {
+                        const command = term.before_cursor();
+                        if (command.trim() === "") {
+                            term.insert("\t");
+                            return false;
+                        }
+                        return original(event);
+                    },
+                },
+            });
+            window.term = term;
+            pyconsole.stdout_callback = (s) => term.echo(s, { newline: false });
+            pyconsole.stderr_callback = (s) => {
+                term.error(s.trimEnd());
+            };
+            term.ready = Promise.resolve();
+            pyodide._api.on_fatal = async (e) => {
+                term.error(
+                    "Unexpected error"
+                );
+                await term.ready;
+                term.pause();
+                await sleep(15);
+                term.pause();
+            };
+        }
+        window.console_ready = main();
+    </script>
+
+    <div id="container">
+        <div id="content">
+            <h1>
+                Challenge
+            </h1>
+            <p>
+	    	There is an array called `numlist` loaded in the interpreter. Find the only prime number in it.
+            </p>
+        </div>
+        <div id="pyodide-container"></div>
+    </div>
+</body>
+
+</html>
