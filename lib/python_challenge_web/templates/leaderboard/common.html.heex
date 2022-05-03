@@ -1,0 +1,14 @@
+<h1>Hello Leaderboard</h1>
+
+<table>
+<tr>
+<th>Name</th>
+<th>Challenges Completed</th>
+</tr>
+<%= for user <- @users do %>
+<tr>
+<td><%= user.name %></td>
+<td><%= user.challenges_completed %></td>
+</tr>
+<% end %>
+</table>

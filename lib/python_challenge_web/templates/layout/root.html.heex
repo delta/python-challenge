@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	  <meta property="og:title" content="Python Challenge">
+	  <meta property="og:description" content="A Python programming challenge organized by Delta Force">
+    <%= csrf_meta_tag() %>
+    <title>Python Challenge</title>
+    <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
+    <link phx-track-static rel="icon" type="image/png" href={Routes.static_path(@conn, "/favicon.ico")}/>
+    <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
+  </head>
+  <body>
+    <header>
+      <a href="/" class="title">Python Challenge</a>
+      <nav>
+        <a href={Routes.leaderboard_path(@conn, :first_year)}>Leaderboard</a>
+      <%= if Plug.Conn.get_session(@conn, :email) == nil do %>
+        <a href={Routes.auth_path(@conn, :login)}>Login</a>
+      <% else %>
+        <a href={Routes.challenge_path(@conn, :index)}>Challenges</a>
+        <a href={Routes.auth_path(@conn, :logout)}>Logout</a>
+      <% end %>
+      </nav>
+    </header>
+    <%= @inner_content %>
+  </body>
+</html>

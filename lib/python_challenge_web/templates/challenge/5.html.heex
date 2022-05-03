@@ -1,0 +1,19 @@
+<script type="text/javascript">
+async function initialize(pyodide) {
+    await pyodide.runPythonAsync(`
+# import micropip
+# await micropip.install(
+#     './secret/wheels/secret-1.0.0-py3-none-any.whl'
+# )
+# from secret.secret import *
+    `);
+    $('#content').html(`
+<h1>
+    Challenge 5
+</h1>
+<p>
+    Find a hidden function in the interpreter and continue from there.
+</p>
+    `)
+}
+</script>
