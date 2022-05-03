@@ -20,20 +20,17 @@ def check_index(ind, rand_str):
 def inject_flag(rand_str):
     section_size = rand_str_len // len(flag)
     for i in range(len(flag)):
-        fragment = ''.join(random.choice(vowels) for i in range(2)) + flag[i] +
-        ''.join(random.choice(string.digits) for i in range(3)) index =
-        random.randrange(i * section_size, (i + 1) * section_size -
-                fragment_length)
+        fragment = ''.join(random.choice(vowels) for i in range(2)) + flag[i] + ''.join(random.choice(string.digits) for i in range(3))
+        index = random.randrange(i * section_size, (i + 1) * section_size - fragment_length)
 
         while not check_index(index, rand_str):
-            index = random.randrange(i * section_size, (i + 1) * section_size -
-                    fragment_length)
+            index = random.randrange(i * section_size, (i + 1) * section_size - fragment_length)
 
         rand_str = rand_str[:index] + fragment + rand_str[index + 1:]
     return rand_str
 
 def test(rand_str):
-    m = re.findall(fragment_regex, rs)
+    m = re.findall(fragment_regex, rand_str)
     extracted_flag = ''.join([x[3] for x in m])
     assert extracted_flag == flag, "Regex failed"
 

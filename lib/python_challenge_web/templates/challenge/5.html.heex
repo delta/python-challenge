@@ -1,18 +1,14 @@
 <script type="text/javascript">
 async function initialize(pyodide) {
     await pyodide.runPythonAsync(`
-# import micropip
-# await micropip.install(
-#     './secret/wheels/secret-1.0.0-py3-none-any.whl'
-# )
-# from secret.secret import *
+        encoded_str = "86f72G17w85s41F68Z31s100q100m7Z"
     `);
     $('#content').html(`
 <h1>
     Challenge 5
 </h1>
 <p>
-    Find a hidden function in the interpreter and continue from there.
+    You are given a string, encoded_str, which is encoded using run-length encoding. Decode the string to go to the next challenge!
 </p>
     `)
 }

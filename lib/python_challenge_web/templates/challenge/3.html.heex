@@ -1,18 +1,16 @@
 <script type="text/javascript">
 async function initialize(pyodide) {
     await pyodide.runPythonAsync(`
-# import micropip
-# await micropip.install(
-#     './secret/wheels/secret-1.0.0-py3-none-any.whl'
-# )
-# from secret.secret import *
+        a = 1
+        b = 1
     `);
     $('#content').html(`
 <h1>
     Challenge 3
 </h1>
 <p>
-    Find a hidden function in the interpreter and continue from there.
+    There are two variables "a" and "b" in the console. First, try running "a is b" in the console. To pass this challenge, all you have to do is find the
+ least positive integer "x" such that the value of a and b are both x, but "a is b" is false.
 </p>
     `)
 }

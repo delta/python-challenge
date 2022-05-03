@@ -1,18 +1,18 @@
 <script type="text/javascript">
 async function initialize(pyodide) {
     await pyodide.runPythonAsync(`
-# import micropip
-# await micropip.install(
-#     './secret/wheels/secret-1.0.0-py3-none-any.whl'
-# )
-# from secret.secret import *
+    import micropip
+    await micropip.install(
+        './wheel/prime-1.0.0-py3-none-any.whl'
+    )
+    from prime.prime import *
     `);
     $('#content').html(`
 <h1>
     Challenge 4
 </h1>
 <p>
-    Find a hidden function in the interpreter and continue from there.
+    There's a list called numlist available in the interpreter. Find the only prime number in numlist.
 </p>
     `)
 }

@@ -1,18 +1,19 @@
 <script type="text/javascript">
 async function initialize(pyodide) {
     await pyodide.runPythonAsync(`
-import micropip
-await micropip.install(
-    './wheel/secret-1.0.0-py3-none-any.whl'
-)
-from secret.secret import *
+        x = '1120001231210311110111210221221201120212110323131031222303110202012123300233232233032102033212021230'
+        x_base = 4
+        y = '7231683224731138546667517216122765255281266257882874167844112613353665367381546575134437152238454147'
+        y_base = 9
+        z_base = 12
     `);
     $('#content').html(`
 <h1>
     Challenge 2
 </h1>
 <p>
-    Find a hidden function in the interpreter and continue from there.
+    There are 5 variables available in your interpreter: x, x_base, y, y_base and z_base. x is a number in base 'x_base' and similarly y is a number in base 'y_base'. Find their sum, z, represented in base 'z_base'.
+    Don't include any quotes or punctuation in your answer.
 </p>
     `)
 }
