@@ -1,14 +1,387 @@
-<h1>Hello Leaderboard</h1>
+<style>
+@import url("https://fonts.googleapis.com/css?family=Barlow+Condensed:300,400,500,600,700,800,900|Barlow:300,400,500,600,700,800,900&display=swap");
+:root {
+	--yellow: #ffe45c;
+	--green: #8fd834;
+	--blue-accent1: #2ecbe9;
+	--blue-accent2: #128fe8;
+	--yellow-accent2: #ffc06e;
+	--yellow-accent3: #bdd99e;
+	--background: #01a66f;
+}
+
+body {
+	font-family: "Barlow", sans-serif;
+	background: #fffafa;
+}
+
+h1 {
+	/* width: ; */
+}
+
+div.top,
+h1 {
+	display: flex;
+	justify-content: space-around;
+	width: 80vw;
+	max-width: 800px;
+	margin: auto;
+}
+
+div.top > div {
+	position: relative;
+	background: var(--blue-accent1);
+	background: linear-gradient(
+		90deg,
+		var(--blue-accent1) 0%,
+		var(--yellow) 100%
+	);
+	cursor: pointer;
+
+	width: 30%;
+	max-width: 250px;
+	margin: 1rem;
+	padding: 1rem;
+
+	border: solid 0.5px black;
+	border-radius: 0.5rem;
+	z-index: -2;
+
+	overflow: hidden;
+
+	transition: all 0.5s;
+}
+
+div.top > div:hover {
+	background-color: var(--green);
+}
+
+div.top > div:nth-of-type(1) {
+	transform: translateY(10px);
+}
+
+div.top > div:nth-of-type(3) {
+	transform: translateY(10px);
+}
+
+div.top > div > * {
+	text-align: center;
+	margin: 0.5rem 0;
+	color: black;
+	z-index: 10;
+}
+
+div.top > div > p.effect {
+	position: absolute;
+	top: 0;
+	left: 0;
+	margin: 0;
+	width: 100%;
+	height: calc(0.75rem + 50px);
+	/* background-color: var(--yellow); */
+	z-index: -1 !important;
+}
+
+div.top > div:nth-of-type(2) > p.effect {
+	background-color: gold;
+}
+div.top > div:nth-of-type(1) > p.effect {
+	background-color: silver;
+}
+div.top > div:nth-of-type(3) > p.effect {
+	background-color: brown;
+}
+
+div.top > div > p.img {
+	background-color: aquamarine;
+	height: 50px;
+	width: 50px;
+	margin: 15px auto;
+	border-radius: 50%;
+	border: 2px solid var(--blue-accent1);
+}
+
+div.top > div > p.name {
+	font-size: 1.5rem;
+	font-weight: bold;
+	margin-bottom: 1rem;
+}
+
+div.top > div > p.challenges {
+	margin-top: 1.5rem;
+	font-weight: 600;
+}
+
+div.top > div > p.score {
+	font-size: 3rem;
+	font-weight: 600;
+}
+
+table,
+div.slider {
+	width: 80vw;
+	max-width: 800px;
+	margin: 3rem auto;
+	position: relative;
+}
+
+table * {
+	color: black;
+	border-radius: 5px;
+}
+
+table > thead {
+	text-align: left;
+	height: fit-content;
+	font-weight: 600;
+}
+
+table > thead > tr > th {
+	width: 33%;
+	padding-left: 0.2rem;
+	padding-bottom: 0.5rem;
+}
+
+table > tbody > tr {
+	height: 2.5rem;
+	margin: 0;
+	border-radius: 5px;
+}
+table > tbody > tr:nth-child(odd) {
+	background-color: #2ecbe966;
+}
+table > tbody > tr:nth-child(odd):hover {
+	background-color: #2ecbe9aa;
+}
+table > tbody > tr:nth-child(even) {
+	background-color: #ffe45c66;
+}
+table > tbody > tr:nth-child(even):hover {
+	background-color: #ffe45caa;
+}
+
+table > tbody > tr > td {
+	padding-left: 1rem;
+	font-weight: 500;
+	font-size: 18px;
+	color: #3b3b3b;
+	/* background-color: #00000025; */
+}
+div.slider {
+	display: flex;
+	justify-content: space-between;
+	width: 80vw;
+	max-width: 800px;
+}
+
+div.slider span {
+	background-color: var(--yellow);
+	padding: 0.5rem 1.5rem;
+	border-radius: 15px;
+	cursor: pointer;
+}
+div.slider span:nth-of-type(2) {
+	float: right;
+	background-color: var(--blue-accent1);
+}
+    @import url("https://fonts.googleapis.com/css?family=Barlow+Condensed:300,400,500,600,700,800,900|Barlow:300,400,500,600,700,800,900&display=swap");
+    :root {
+        --yellow: #ffe45c;
+        --green: #8fd834;
+        --blue-accent1: #2ecbe9;
+        --blue-accent2: #128fe8;
+        --yellow-accent2: #ffc06e;
+        --yellow-accent3: #bdd99e;
+        --background: #01a66f;
+    }
+
+    body {
+        font-family: "Barlow", sans-serif;
+        background: #fffafa;
+    }
+
+    h1 {
+        /* width: ; */
+    }
+
+    div.top,
+    h1 {
+        display: flex;
+        justify-content: space-around;
+        width: 80vw;
+        max-width: 800px;
+        margin: auto;
+    }
+
+    div.top > div {
+        position: relative;
+        background: var(--blue-accent1);
+        background: linear-gradient(
+            90deg,
+            var(--blue-accent1) 0%,
+            var(--yellow) 100%
+        );
+        cursor: pointer;
+
+        width: 30%;
+        max-width: 250px;
+        margin: 1rem;
+        padding: 1rem;
+
+        border: solid 0.5px black;
+        border-radius: 0.5rem;
+        z-index: -2;
+
+        overflow: hidden;
+
+        transition: all 0.5s;
+    }
+
+    div.top > div:hover {
+        background-color: var(--green);
+    }
+
+    div.top > div:nth-of-type(1) {
+        transform: translateY(10px);
+    }
+
+    div.top > div:nth-of-type(3) {
+        transform: translateY(10px);
+    }
+
+    div.top > div > * {
+        text-align: center;
+        margin: 0.5rem 0;
+        color: black;
+        z-index: 10;
+    }
+
+    div.top > div > p.effect {
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin: 0;
+        width: 100%;
+        height: calc(0.75rem + 50px);
+        /* background-color: var(--yellow); */
+        z-index: -1 !important;
+    }
+
+    div.top > div:nth-of-type(2) > p.effect {
+        background-color: gold;
+    }
+    div.top > div:nth-of-type(1) > p.effect {
+        background-color: silver;
+    }
+    div.top > div:nth-of-type(3) > p.effect {
+        background-color: brown;
+    }
+
+    div.top > div > p.img {
+        background-color: aquamarine;
+        height: 50px;
+        width: 50px;
+        margin: 15px auto;
+        border-radius: 50%;
+        border: 2px solid var(--blue-accent1);
+    }
+
+    div.top > div > p.name {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+
+    div.top > div > p.challenges {
+        margin-top: 1.5rem;
+        font-weight: 600;
+    }
+
+    div.top > div > p.score {
+        font-size: 3rem;
+        font-weight: 600;
+    }
+
+    table,
+    div.slider {
+        width: 80vw;
+        max-width: 800px;
+        margin: 3rem auto;
+        position: relative;
+    }
+
+    table * {
+        color: black;
+        border-radius: 5px;
+    }
+
+    table > thead {
+        text-align: left;
+        height: fit-content;
+        font-weight: 600;
+    }
+
+    table > thead > tr > th {
+        width: 33%;
+        padding-left: 0.2rem;
+        padding-bottom: 0.5rem;
+    }
+
+    table > tbody > tr {
+        height: 2.5rem;
+        margin: 0;
+        border-radius: 5px;
+    }
+    table > tbody > tr:nth-child(odd) {
+        background-color: #2ecbe966;
+    }
+    table > tbody > tr:nth-child(odd):hover {
+        background-color: #2ecbe9aa;
+    }
+    table > tbody > tr:nth-child(even) {
+        background-color: #ffe45c66;
+    }
+    table > tbody > tr:nth-child(even):hover {
+        background-color: #ffe45caa;
+    }
+
+    table > tbody > tr > td {
+        padding-left: 1rem;
+        font-weight: 500;
+        font-size: 18px;
+        color: #3b3b3b;
+        /* background-color: #00000025; */
+    }
+    div.slider {
+        display: flex;
+        justify-content: space-between;
+        width: 80vw;
+        max-width: 800px;
+    }
+
+    div.slider span {
+        background-color: var(--yellow);
+        padding: 0.5rem 1.5rem;
+        border-radius: 15px;
+        cursor: pointer;
+    }
+    div.slider span:nth-of-type(2) {
+        float: right;
+        background-color: var(--blue-accent1);
+    }
+</style>
 
 <table>
-<tr>
+<thead>
 <th>Name</th>
 <th>Challenges Completed</th>
-</tr>
+</thead>
+<tbody>
 <%= for user <- @users do %>
 <tr>
 <td><%= user.name %></td>
 <td><%= user.challenges_completed %></td>
 </tr>
 <% end %>
+</tbody>
 </table>
