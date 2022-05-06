@@ -1,18 +1,29 @@
 <script type="text/javascript">
 async function initialize(pyodide) {
     await pyodide.runPythonAsync(`
-# import micropip
-# await micropip.install(
-#     './secret/wheels/secret-1.0.0-py3-none-any.whl'
-# )
-# from secret.secret import *
+    from pyodide.http import pyfetch
+
+    response = await pyfetch("/15/database.db")
+    if response.status == 200:
+        with open("database.db", "wb") as f:
+            f.write(await response.bytes())
     `);
     $('#content').html(`
 <h1>
     Challenge 15
 </h1>
 <p>
-    Find a hidden function in the interpreter and continue from there.
+    You have been given an SQLite database file, 'database.db'. It contains three tables related to students their examinations, and their marks in each examination:
+    <ol>
+        <li>students (roll_no INTEGER PRIMARY KEY, name TEXT, dept TEXT)</li>
+        <li>exams (id INTEGER PRIMARY KEY, exam_name TEXT, total_marks INTEGER)</li>
+        <li>marks (id INTEGER PRIMARY KEY, exam_id INTEGER, student_id INTEGER, marks INTEGER, exam_date TEXT, FOREIGN KEY(exam_id) REFERENCES exams(id), FOREIGN KEY(student_id) REFERENCES students(roll_no))
+    </ol>
+    You have to find top 10 students ordered by the mean of their marks obtained in the exams that they have written in the month of March.
+    Construct a string by concatenating the names of these students in order, after stripping off spaces.
+    The answer is the SHA256 hash of this string.
+    <br>
+    Hint: You can work with the database file using the <a href="https://docs.python.org/3/library/sqlite3.html">sqlite3</a> library.
 </p>
     `)
 }
