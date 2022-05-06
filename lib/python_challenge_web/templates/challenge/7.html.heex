@@ -1,18 +1,20 @@
 <script type="text/javascript">
 async function initialize(pyodide) {
     await pyodide.runPythonAsync(`
-# import micropip
-# await micropip.install(
-#     './secret/wheels/secret-1.0.0-py3-none-any.whl'
-# )
-# from secret.secret import *
+      import pickle
+
+      class Main:
+        def __init__(self):
+          print("PICKLE_THIS")
+
+      p = pickle.dumps(Main)
     `);
     $('#content').html(`
 <h1>
     Challenge 7
 </h1>
 <p>
-    Find a hidden function in the interpreter and continue from there.
+  Pickle is a powerful tool in any python toolkit. Can you load what the pickle 'p' has to offer?
 </p>
     `)
 }
