@@ -1,18 +1,20 @@
 <script type="text/javascript">
 async function initialize(pyodide) {
     await pyodide.runPythonAsync(`
-# import micropip
-# await micropip.install(
-#     './secret/wheels/secret-1.0.0-py3-none-any.whl'
-# )
-# from secret.secret import *
+    import micropip
+    await micropip.install(
+      './wheel/classes-1.0.0-py3-none-any.whl'
+    )
+    from classes.classes import *
     `);
     $('#content').html(`
 <h1>
     Challenge 16
 </h1>
 <p>
-    Find a hidden function in the interpreter and continue from there.
+  Classes are a pleasure until they are not (Inheritance is a pain). So,
+  can you figure out the inheritance chain for "TQwUJ", and give us the
+  concatenation of their names?
 </p>
     `)
 }
