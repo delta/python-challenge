@@ -1,18 +1,18 @@
 <script type="text/javascript">
 async function initialize(pyodide) {
     await pyodide.runPythonAsync(`
-# import micropip
-# await micropip.install(
-#     './secret/wheels/secret-1.0.0-py3-none-any.whl'
-# )
-# from secret.secret import *
+    import micropip
+    await micropip.install(
+        './wheel/webscrape-1.0.0-py3-none-any.whl'
+    )
+    from webscrape.chall import *
     `);
     $('#content').html(`
 <h1>
     Challenge 12
 </h1>
 <p>
-    Find a hidden function in the interpreter and continue from there.
+    There is an array of 100 HTML files in the array "html_files_in_base64", in base64 encoding. In each of these HTML files, there is an input element for "rating". Find and join the ids of these elements to get the solution.
 </p>
     `)
 }
