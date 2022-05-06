@@ -1,18 +1,24 @@
 <script type="text/javascript">
 async function initialize(pyodide) {
     await pyodide.runPythonAsync(`
-# import micropip
-# await micropip.install(
-#     './secret/wheels/secret-1.0.0-py3-none-any.whl'
-# )
-# from secret.secret import *
+        from pyodide.http import pyfetch
+
+        first_response = await pyfetch("/8/first.csv")
+        if first_response.status == 200:
+            with open("first.csv", "wb") as f:
+                f.write(await first_response.bytes())
+        
+        second_response = await pyfetch("/8/second.csv")
+        if second_response.status == 200:
+            with open("second.csv", "wb") as f:
+                f.write(await second_response.bytes())
     `);
     $('#content').html(`
 <h1>
     Challenge 8
 </h1>
 <p>
-    Find a hidden function in the interpreter and continue from there.
+    There are two CSV files, first.csv and second.csv. Find the row number of the duplicate entry between these two files.
 </p>
     `)
 }

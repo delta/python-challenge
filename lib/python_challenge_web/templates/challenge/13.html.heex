@@ -1,19 +1,25 @@
 <script type="text/javascript">
 async function initialize(pyodide) {
     await pyodide.runPythonAsync(`
-# import micropip
-# await micropip.install(
-#     './secret/wheels/secret-1.0.0-py3-none-any.whl'
-# )
-# from secret.secret import *
+    import micropip
+    await micropip.install('numpy')
+    await micropip.install(
+        './wheel/numerical-1.0.0-py3-none-any.whl'
+    )
+    from numerical.numerical import *
     `);
     $('#content').html(`
 <h1>
     Challenge 13
 </h1>
 <p>
-    Find a hidden function in the interpreter and continue from there.
+    You are given a matrix my_matrix in the interpreter. Compute the
+    Special Sum of the matrix. The special sum of a square matrix is
+    defined as S<sub>1</sub> | S<sub>2</sub> | ... S<sub>m</sub> where S<sub>1</sub> to S<sub>m</sub> are the sum of the
+    elements across the diagonals of the matrix as shown in the
+    figure, and '|' denotes bitwise OR operation.
 </p>
+<img src="/images/matrix.png" />
     `)
 }
 </script>
