@@ -3,7 +3,6 @@
     <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
 
     <style>
-    @import url("https://fonts.googleapis.com/css?family=Barlow+Condensed:300,400,500,600,700,800,900|Barlow:300,400,500,600,700,800,900&display=swap");
     .about {
         position: fixed;
         z-index: 10;
@@ -32,7 +31,7 @@
         width: 40px;
         height: 40px;
         z-index: 9;
-        background-image: url(https://rafaelavlucas.github.io/assets/codepen/logo_white.svg);
+        background-image: url(/images/logo.png);
         background-size: 50%;
         background-repeat: no-repeat;
         background-position: 10px 7px;
@@ -62,19 +61,22 @@
         transition: all 0.8s ease;
     }
     .about .social.portfolio .icon {
-        background-image: url(https://rafaelavlucas.github.io/assets/codepen/link.svg);
+        filter: invert(100%);
+        background-image: url(/images/website.png);
     }
     .about .social.dribbble {
         transition: all 0.3s ease;
     }
     .about .social.dribbble .icon {
-        background-image: url(https://rafaelavlucas.github.io/assets/codepen/dribbble.svg);
+        filter: invert(100%);
+        background-image: url(/images/insta.svg);
     }
     .about .social.linkedin {
         transition: all 0.8s ease;
     }
     .about .social.linkedin .icon {
-        background-image: url(https://rafaelavlucas.github.io/assets/codepen/linkedin.svg);
+        filter: invert(100%);
+        background-image: url(/images/linkedin.svg);
     }
     .about:hover {
         width: 105px;
@@ -169,6 +171,13 @@
         font-family: "Barlow", sans-serif;
         background: #01A66F;
     }
+    body, .scene {
+        overflow: hidden;
+    }
+
+    nav div.menu {
+        background-color: transparent;
+    }
 
     .logo {
         position: fixed;
@@ -208,7 +217,7 @@
         font-weight: 600;
         font-size: 20px;
         letter-spacing: 1px;
-        background: white;
+        <%# background: white; %>
         padding: 4px 8px;
         border-radius: 2px;
         opacity: 0.5;
@@ -255,7 +264,7 @@
     }
     nav .menu .menu_links .link:hover {
         opacity: 1;
-        color: #00AEAD;
+        color: #fdfdfd;
     }
     nav .menu .menu_links .link:hover:before {
         width: 40px;
@@ -424,9 +433,9 @@
     }
     .wrapper .container .text {
         width: 60%;
-        height: 40%;
+        height: 35%;
         min-width: 400px;
-        min-height: 500px;
+        min-height: 400px;
         position: absolute;
         margin: 40px 0;
         animation: text 0.6s 1.8s ease backwards;
@@ -486,9 +495,10 @@
     .wrapper .container .text article button:hover {
         box-shadow: 0px 10px 10px -10px rgba(54, 24, 79, 0.5);
         transform: translateY(5px);
-        background: #00AEAD;
-        color: white;
+        background: #FFE45C;
+        color: #000;
     }
+
     .wrapper .container .p404 {
         font-size: 60px;
         font-weight: 700;
@@ -502,10 +512,25 @@
         animation: anime404 0.6s cubic-bezier(0.3, 0.8, 1, 1.05) both;
         animation-delay: 1.2s;
     }
+    .wrapper .container .py-img {
+        width: 200px;
+        height: 200px;
+        top: calc(50% - 250px) !important;
+        left: calc(50% - 100px) !important;
+        animation: anime404 0.6s cubic-bezier(0.3, 0.8, 1, 1.05) both;
+        animation-delay: 1.2s;
+    }
     @media screen and (max-width: 799px) {
         .wrapper .container .p404 {
-            font-size: 100px;
+            font-size: 40px;
+            text-align: center;
         }
+        .wrapper .container .py-img {
+        width: 100px;
+        height: 100px;
+        top: calc(50% - 150px) !important;
+        left: calc(50% - 50px) !important;
+    }
     }
     @keyframes anime404 {
         0% {
@@ -514,6 +539,13 @@
         }
     }
     .wrapper .container .p404:nth-of-type(2) {
+        color: #36184f;
+        z-index: 1;
+        animation-delay: 1s;
+        filter: blur(10px);
+        opacity: 0.8;
+    }
+    .wrapper .container .py-img:nth-of-type(2) {
         color: #36184f;
         z-index: 1;
         animation-delay: 1s;
@@ -651,38 +683,35 @@
         animation-name: pieceLeft;
         animation-delay: 4.5s;
     }
+
+    .made-with-love {
+        position: absolute;
+        bottom: 0px;
+        width: 100%;
+        margin: auto;
+        color: #fff;
+        text-align: center;
+        font-weight: 500;
+        font-size: 1.25rem;
+    }
 </style>
 </head>
 
 
 
 <div class="about">
-<a class="bg_links social portfolio" href="https://www.rafaelalucas.com" target="_blank">
+<a class="bg_links social portfolio" href="https://delta.nitt.edu" target="_blank" rel="noopener norefferer">
     <span class="icon"></span>
 </a>
-<a class="bg_links social dribbble" href="https://dribbble.com/rafaelalucas" target="_blank">
+<a class="bg_links social dribbble" href="https://www.instagram.com/delta_nitt/" target="_blank" rel="noopener norefferer">
     <span class="icon"></span>
 </a>
-<a class="bg_links social linkedin" href="https://www.linkedin.com/in/rafaelalucas/" target="_blank">
+<a class="bg_links social linkedin" href="https://www.linkedin.com/company/delta-force/mycompany/" target="_blank" rel="noopener norefferer">
     <span class="icon"></span>
 </a>
 <a class="bg_links logo"></a>
 </div>
 <!-- end about -->
-
-    <nav>
-        <div class="menu">
-            <p class="website_name">LOGO</p>
-            <div class="menu_links">
-                <a href="" class="link">about</a>
-                <a href="" class="link">projects</a>
-                <a href="" class="link">contacts</a>
-            </div>
-            <div class="menu_icon">
-                <span class="icon"></span>
-            </div>
-        </div>
-    </nav>
 
     <section class="wrapper">
 
@@ -691,9 +720,9 @@
             <div id="scene" class="scene" data-hover-only="false">
 
 
-                <div class="circle" data-depth="1.2"></div>
+                <div class="circle" data-depth="0.6"></div>
 
-                <div class="one" data-depth="0.9">
+                <div class="one" data-depth="0.2">
                     <div class="content">
                         <span class="piece"></span>
                         <span class="piece"></span>
@@ -701,7 +730,7 @@
                     </div>
                 </div>
 
-                <div class="two" data-depth="0.60">
+                <div class="two" data-depth="0.15">
                     <div class="content">
                         <span class="piece"></span>
                         <span class="piece"></span>
@@ -709,7 +738,7 @@
                     </div>
                 </div>
 
-                <div class="three" data-depth="0.40">
+                <div class="three" data-depth="0.10">
                     <div class="content">
                         <span class="piece"></span>
                         <span class="piece"></span>
@@ -717,20 +746,27 @@
                     </div>
                 </div>
 
-                <%# <img class="p404" data-depth="0.50" src='/images/python.webp'>
-                <img class="p404" data-depth="0.10" src='/images/python.webp'> %>
-                <p class="p404" data-depth="0.50">Python Challenge</p>
-                <p class="p404" data-depth="0.10">Python Challenge</p>
+                <%# <img class="py-img" data-depth="0.50" src='/images/python.webp'> %>
+                <img class="py-img" data-depth="0.0010" src='/images/python.webp'>
+                <p class="p404" data-depth="0.050">Python Challenge</p>
+                <p class="p404" data-depth="0.010">Python Challenge</p>
             </div>
 
             <div class="text">
                 <article>
-                    <p>Uh oh! Looks like you got lost. <br>Go back to the homepage if you dare!</p>
-                    <button>i dare!</button>
+                    <p>You think you are good at programming ? <br>Good Luck. </p>
+                    <%= if Plug.Conn.get_session(@conn, :email) == nil do %>
+                        <a href={Routes.auth_path(@conn, :login)} class="link"><button>Get started!</button></a>
+                    <% else %>
+                        <a href={Routes.challenge_path(@conn, :index)} class="link"><button>Get started!</button></a>
+                    <% end %>
                 </article>
             </div>
-
         </div>
+        <div class="made-with-love">Made with ❤️ by
+            <a rel="noopener noreferrer" target="_blank" href="https://delta.nitt.edu" style="text-decoration:underline;">Delta Force</a>
+        </div>
+
     </section>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/parallax/3.1.0/parallax.min.js"></script>

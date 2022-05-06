@@ -13,18 +13,27 @@
     <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
   </head>
   <body>
-    <header>
-      <a href="/" class="title">Python Challenge</a>
       <nav>
-        <a href={Routes.leaderboard_path(@conn, :first_year)}>Leaderboard</a>
-      <%= if Plug.Conn.get_session(@conn, :email) == nil do %>
-        <a href={Routes.auth_path(@conn, :login)}>Login</a>
-      <% else %>
-        <a href={Routes.challenge_path(@conn, :index)}>Challenges</a>
-        <a href={Routes.auth_path(@conn, :logout)}>Logout</a>
-      <% end %>
-      </nav>
-    </header>
+        <div class="menu">
+            <p class="website_name">
+              <a href="/">
+                <img src="/images/logo.png" height="40px" width="40px">
+              </a>
+            </p>
+            <div class="menu_links">
+            <a href={Routes.leaderboard_path(@conn, :first_year)} class="link">Leaderboard</a>
+            <%= if Plug.Conn.get_session(@conn, :email) == nil do %>
+                <a href={Routes.auth_path(@conn, :login)} class="link">Login</a>
+            <% else %>
+                <a href={Routes.challenge_path(@conn, :index)} class="link">Challenges</a>
+                <a href={Routes.auth_path(@conn, :logout)} class="link">Logout</a>
+            <% end %>
+            </div>
+            <div class="menu_icon">
+                <span class="icon"></span>
+            </div>
+        </div>
+    </nav>
     <%= @inner_content %>
   </body>
 </html>
