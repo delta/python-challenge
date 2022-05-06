@@ -17,7 +17,7 @@
         <div class="menu">
             <p class="website_name">
               <a href="/">
-                <img src="/images/logo.png" height="40px" width="40px">
+                <img src={System.get_env("BASE_URI") <> Routes.static_path(@conn, "/images/logo.png")} height="40px" width="40px">
               </a>
             </p>
             <div class="menu_links">
