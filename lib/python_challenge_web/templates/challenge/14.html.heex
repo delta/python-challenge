@@ -1,18 +1,28 @@
 <script type="text/javascript">
 async function initialize(pyodide) {
     await pyodide.runPythonAsync(`
-# import micropip
-# await micropip.install(
-#     './secret/wheels/secret-1.0.0-py3-none-any.whl'
-# )
-# from secret.secret import *
+    import micropip
+    await micropip.install('pandas')
+
+    from pyodide.http import pyfetch
+    response = await pyfetch("/14/boston.csv")
+    if response.status == 200:
+        with open("dataset.csv", "wb") as f:
+            f.write(await response.bytes())
     `);
     $('#content').html(`
 <h1>
     Challenge 14
 </h1>
 <p>
-    Find a hidden function in the interpreter and continue from there.
+    There is a CSV file 'dataset.csv', but it is not useful for analysis right now. Use pandas to do the following pre-processing steps to clean it.
+    <ul>
+        <li>Drop columns which have "null" value (shown as NaN in the terminal) for more than half of the rows</li>
+        <li>Remove duplicate rows (identified by the 'id' column)</li>
+        <li>In all the columns which have null values, replace the null value with the mean of the rest of the values in the column.</li>
+    </ul>
+    The solution to this challenge is the sum of the final number of columns and the sum of all the values in each row.
+    Hint: You can use the 'pandas' module for this challenge.
 </p>
     `)
 }
