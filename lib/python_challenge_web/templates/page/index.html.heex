@@ -1,6 +1,6 @@
 <head>
-    <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/home.css")}/>
-    <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
+    <link phx-track-static rel="stylesheet" href={System.get_env("BASE_URI") <> Routes.static_path(@conn, "/assets/home.css")}/>
+    <link phx-track-static rel="stylesheet" href={System.get_env("BASE_URI") <> Routes.static_path(@conn, "/assets/app.css")}/>
 
     <style>
     .about {
@@ -756,9 +756,9 @@
                 <article>
                     <p>You think you are good at programming ? <br>Good Luck. </p>
                     <%= if Plug.Conn.get_session(@conn, :email) == nil do %>
-                        <a href={Routes.auth_path(@conn, :login)} class="link"><button>Get started!</button></a>
+                        <a href={System.get_env("BASE_URI") <> Routes.auth_path(@conn, :login)} class="link"><button>Get started!</button></a>
                     <% else %>
-                        <a href={Routes.challenge_path(@conn, :index)} class="link"><button>Get started!</button></a>
+                        <a href={System.get_env("BASE_URI") <> Routes.challenge_path(@conn, :index)} class="link"><button>Get started!</button></a>
                     <% end %>
                 </article>
             </div>
