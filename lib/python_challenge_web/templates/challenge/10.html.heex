@@ -3,7 +3,7 @@ async function initialize(pyodide) {
     await pyodide.runPythonAsync(`
         from pyodide.http import pyfetch
 
-        response = await pyfetch("/10/final.zip")
+        response = await pyfetch("./10/final.zip")
         if response.status == 200:
             with open("challenge.zip", "wb") as f:
                 f.write(await response.bytes())

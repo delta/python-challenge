@@ -3,12 +3,12 @@ async function initialize(pyodide) {
     await pyodide.runPythonAsync(`
         from pyodide.http import pyfetch
 
-        first_response = await pyfetch("/8/first.csv")
+        first_response = await pyfetch("./8/first.csv")
         if first_response.status == 200:
             with open("first.csv", "wb") as f:
                 f.write(await first_response.bytes())
         
-        second_response = await pyfetch("/8/second.csv")
+        second_response = await pyfetch("./8/second.csv")
         if second_response.status == 200:
             with open("second.csv", "wb") as f:
                 f.write(await second_response.bytes())

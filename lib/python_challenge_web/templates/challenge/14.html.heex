@@ -5,7 +5,7 @@ async function initialize(pyodide) {
     await micropip.install('pandas')
 
     from pyodide.http import pyfetch
-    response = await pyfetch("/14/boston.csv")
+    response = await pyfetch("./14/boston.csv")
     if response.status == 200:
         with open("dataset.csv", "wb") as f:
             f.write(await response.bytes())

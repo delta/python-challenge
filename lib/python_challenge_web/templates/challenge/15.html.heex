@@ -3,7 +3,7 @@ async function initialize(pyodide) {
     await pyodide.runPythonAsync(`
     from pyodide.http import pyfetch
 
-    response = await pyfetch("/15/database.db")
+    response = await pyfetch("./15/database.db")
     if response.status == 200:
         with open("database.db", "wb") as f:
             f.write(await response.bytes())

@@ -3,7 +3,7 @@ async function initialize(pyodide) {
     await pyodide.runPythonAsync(`
     import micropip
     await micropip.install(
-        './wheel/webscrape-1.0.0-py3-none-any.whl'
+        './challenge/wheel/webscrape-1.0.0-py3-none-any.whl'
     )
     from webscrape.chall import *
     `);

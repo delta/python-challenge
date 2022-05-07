@@ -4,7 +4,7 @@ async function initialize(pyodide) {
     import micropip
     await micropip.install('numpy')
     await micropip.install(
-        './wheel/numerical-1.0.0-py3-none-any.whl'
+        './challenge/wheel/numerical-1.0.0-py3-none-any.whl'
     )
     from numerical.numerical import *
     `);
