@@ -7,11 +7,13 @@ RUN mix local.hex --force
 RUN mkdir /app
 
 WORKDIR /app
-COPY mix.* .
-RUN mix deps.get
+COPY mix.* ./
+RUN mix deps.get --only-prod --force
+RUN mix local.rebar --force
 
 COPY . .
 
-RUN mix do compile
+RUN mix assets.deploy
+RUN mix compile
 
 CMD ["/app/entrypoint.sh"]

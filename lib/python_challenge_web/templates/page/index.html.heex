@@ -1,5 +1,4 @@
 <head>
-    <link phx-track-static rel="stylesheet" href={System.get_env("BASE_URI") <> Routes.static_path(@conn, "/assets/home.css")}/>
     <link phx-track-static rel="stylesheet" href={System.get_env("BASE_URI") <> Routes.static_path(@conn, "/assets/app.css")}/>
 
     <style>
@@ -31,7 +30,7 @@
         width: 40px;
         height: 40px;
         z-index: 9;
-        background-image: url(/images/logo.png);
+        background-image: url(./images/logo.png);
         background-size: 50%;
         background-repeat: no-repeat;
         background-position: 10px 7px;
@@ -62,21 +61,21 @@
     }
     .about .social.portfolio .icon {
         filter: invert(100%);
-        background-image: url(/images/website.png);
+        background-image: url(./images/website.png);
     }
     .about .social.dribbble {
         transition: all 0.3s ease;
     }
     .about .social.dribbble .icon {
         filter: invert(100%);
-        background-image: url(/images/insta.svg);
+        background-image: url(./images/insta.svg);
     }
     .about .social.linkedin {
         transition: all 0.8s ease;
     }
     .about .social.linkedin .icon {
         filter: invert(100%);
-        background-image: url(/images/linkedin.svg);
+        background-image: url(./images/linkedin.svg);
     }
     .about:hover {
         width: 105px;
@@ -747,7 +746,7 @@
                 </div>
 
                 <%# <img class="py-img" data-depth="0.50" src='/images/python.webp'> %>
-                <img class="py-img" data-depth="0.0010" src='/images/python.webp'>
+                <img class="py-img" data-depth="0.0010" src={System.get_env("BASE_URI") <> Routes.static_path(@conn, "/images/python.webp")}>
                 <p class="p404" data-depth="0.050">Python Challenge</p>
                 <p class="p404" data-depth="0.010">Python Challenge</p>
             </div>

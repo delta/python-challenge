@@ -14,6 +14,4 @@ if [[ -z `psql -Atqc "\\list python_challenge_prod"` ]]; then
   echo "Database python_challenge_prod created."
 fi
 
-mix phx.digest
-
 exec mix phx.server
