@@ -17,7 +17,7 @@ defmodule PythonChallengeWeb.ChallengeController do
         Logger.info("User: #{email} #{challenges_completed} challenges completed")
 
         case challenges_completed do
-          20 ->
+          18 ->
             conn
             |> render("completed.html")
           _ ->
