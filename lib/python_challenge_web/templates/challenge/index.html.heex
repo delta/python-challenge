@@ -180,7 +180,7 @@
 <div id="container">
     <div id="question-panel">
         <div id="content"></div>
-        <form id="form" method="post" action={System.get_env("BASE_URI") <> Routes.challenge_path(@conn, :submit)}>
+        <form id="form" method="post" action={Routes.challenge_path(@conn, :submit)}>
             <input
                 type="text"
                 id="input"

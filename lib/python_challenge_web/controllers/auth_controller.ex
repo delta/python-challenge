@@ -15,7 +15,7 @@ defmodule PythonChallengeWeb.AuthController do
         Logger.info("User logged in: #{email}")
 
         conn
-        |> redirect(to: "/")
+        |> redirect(to: conn |> Routes.page_path(:index))
     end
   end
 
@@ -47,26 +47,26 @@ defmodule PythonChallengeWeb.AuthController do
             |> put_session(:email, email)
             |> put_session(:name, name)
             |> configure_session(renew: true)
-            |> redirect(to: "/")
+            |> redirect(to: conn |> Routes.page_path(:index))
 
           {:error, %OAuth2.Response{status_code: code}} ->
             Logger.error("OAuth2 request failed with code: #{code}")
 
             conn
-            |> redirect(to: "/auth/error")
+            |> redirect(to: conn |> Routes.page_path(:index))
 
           {:error, %OAuth2.Error{reason: reason}} ->
             Logger.error("Error: #{reason}")
 
             conn
-            |> redirect(to: "/auth/error")
+            |> redirect(to: conn |> Routes.page_path(:index))
         end
 
       email ->
         Logger.info("User #{email} is already logged in.")
 
         conn
-        |> redirect(to: "/")
+        |> redirect(to: conn |> Routes.page_path(:index))
     end
   end
 
@@ -74,6 +74,6 @@ defmodule PythonChallengeWeb.AuthController do
     conn
     |> delete_session(:email)
     |> delete_session(:name)
-    |> redirect(to: "/")
+    |> redirect(to: conn |> Routes.page_path(:index))
   end
 end

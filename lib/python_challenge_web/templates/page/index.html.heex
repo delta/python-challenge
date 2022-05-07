@@ -1,5 +1,5 @@
 <head>
-    <link phx-track-static rel="stylesheet" href={System.get_env("BASE_URI") <> Routes.static_path(@conn, "/assets/app.css")}/>
+    <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
 
     <style>
     .about {
@@ -746,7 +746,7 @@
                 </div>
 
                 <%# <img class="py-img" data-depth="0.50" src='/images/python.webp'> %>
-                <img class="py-img" data-depth="0.0010" src={System.get_env("BASE_URI") <> Routes.static_path(@conn, "/images/python.webp")}>
+                <img class="py-img" data-depth="0.0010" src={Routes.static_path(@conn, "/images/python.webp")}>
                 <p class="p404" data-depth="0.050">Python Challenge</p>
                 <p class="p404" data-depth="0.010">Python Challenge</p>
             </div>
@@ -755,9 +755,9 @@
                 <article>
                     <p>You think you are good at programming ? <br>Good Luck. </p>
                     <%= if Plug.Conn.get_session(@conn, :email) == nil do %>
-                        <a href={System.get_env("BASE_URI") <> Routes.auth_path(@conn, :login)} class="link"><button>Get started!</button></a>
+                        <a href={Routes.auth_path(@conn, :login)} class="link"><button>Get started!</button></a>
                     <% else %>
-                        <a href={System.get_env("BASE_URI") <> Routes.challenge_path(@conn, :index)} class="link"><button>Get started!</button></a>
+                        <a href={Routes.challenge_path(@conn, :index)} class="link"><button>Get started!</button></a>
                     <% end %>
                 </article>
             </div>

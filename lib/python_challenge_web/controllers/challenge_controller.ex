@@ -11,7 +11,7 @@ defmodule PythonChallengeWeb.ChallengeController do
       nil ->
         Logger.info("User is not logged in")
         conn
-        |> redirect(to: "/auth/login")
+        |> redirect(to: conn |> Routes.auth_path(:login))
       email ->
         challenges_completed = Repo.get_by(User, email: email).challenges_completed
         Logger.info("User: #{email} #{challenges_completed} challenges completed")
@@ -34,7 +34,7 @@ defmodule PythonChallengeWeb.ChallengeController do
       nil ->
         Logger.info("User is not logged in")
         conn
-        |> redirect(to: "/auth/login")
+        |> redirect(to: conn |> Routes.auth_path(:login))
       email ->
         challenges_completed = Repo.get_by(User, email: email).challenges_completed
         Logger.info("User: #{email} #{challenges_completed} challenges completed")
@@ -57,7 +57,7 @@ defmodule PythonChallengeWeb.ChallengeController do
       nil ->
         Logger.info("User is not logged in")
         conn
-        |> redirect(to: "/auth/login")
+        |> redirect(to: conn |> Routes.auth_path(:login))
       email ->
         challenges_completed = Repo.get_by(User, email: email).challenges_completed
         case challenges_completed do
@@ -74,12 +74,12 @@ defmodule PythonChallengeWeb.ChallengeController do
               |> Repo.update()
 
               conn
-              |> redirect(to: "/challenge?solution=correct")
+              |> redirect(to: conn |> Routes.challenge_path(:index, solution: "correct"))
             else
               Logger.info("User #{email} submitted wrong solution to chall #{challenges_completed + 1}")
 
               conn
-              |> redirect(to: "/challenge?solution=incorrect")
+              |> redirect(to: conn |> Routes.challenge_path(:index, solution: "incorrect"))
             end
         end
     end
