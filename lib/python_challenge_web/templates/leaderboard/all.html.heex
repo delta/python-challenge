@@ -1,3 +1,18 @@
 <h1>Leaderboard for All</h1>
 
 <%= render("common.html", users: @users, current_user: @current_user) %>
+
+<table>
+<thead>
+<th>Name</th>
+<th>Challenges Completed</th>
+</thead>
+<tbody>
+<%= for user <- @users do %>
+    <tr>
+        <td><%= user.name %></td>
+        <td><%= user.challenges_completed %></td>
+    </tr>
+<% end %>
+</tbody>
+</table>

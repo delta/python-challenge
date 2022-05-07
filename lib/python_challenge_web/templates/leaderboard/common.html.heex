@@ -316,9 +316,10 @@ div.slider span:nth-of-type(2) {
     }
 
     table > thead {
-        text-align: left;
+        text-align: center;
         height: fit-content;
         font-weight: 600;
+        font-size: 22px;
     }
 
     table > thead > tr > th {
@@ -346,10 +347,10 @@ div.slider span:nth-of-type(2) {
     }
 
     table > tbody > tr > td {
-        padding-left: 1rem;
         font-weight: 500;
         font-size: 18px;
         color: #3b3b3b;
+        text-align: center;
         /* background-color: #00000025; */
     }
     div.slider {
@@ -370,18 +371,3 @@ div.slider span:nth-of-type(2) {
         background-color: var(--blue-accent1);
     }
 </style>
-
-<table>
-<thead>
-<th>Name</th>
-<th>Challenges Completed</th>
-</thead>
-<tbody>
-<%= for user <- @users do %>
-<tr>
-<td><%= user.name %></td>
-<td><%= user.challenges_completed %></td>
-</tr>
-<% end %>
-</tbody>
-</table>

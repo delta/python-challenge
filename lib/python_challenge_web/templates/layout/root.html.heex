@@ -21,7 +21,8 @@
               </a>
             </p>
             <div class="menu_links">
-            <a href={Routes.leaderboard_path(@conn, :first_year)} class="link">Leaderboard</a>
+            <a href={Routes.leaderboard_path(@conn, :first_year)} class="link">First-Years Leaderboard</a>
+            <a href={Routes.leaderboard_path(@conn, :all)} class="link">Leaderboard</a>
             <%= if Plug.Conn.get_session(@conn, :email) == nil do %>
                 <a href={Routes.auth_path(@conn, :login)} class="link">Login</a>
             <% else %>
