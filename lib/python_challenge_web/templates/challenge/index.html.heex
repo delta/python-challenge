@@ -42,6 +42,10 @@
             flex-direction: column;
         }
     }
+
+    #content > p {
+        font-size: 1.5em;
+    }
 </style>
 
 <%= render(@challenge_id <> ".html") %>
@@ -75,7 +79,7 @@
             from pyodide import to_js
             from pyodide.console import PyodideConsole, repr_shorten, BANNER
             import __main__
-            BANNER = "Welcome to the Pyodide terminal emulator 🐍\\n" + BANNER
+            BANNER = "Welcome to the Python Challenge Interpreter 🐍\\n" + BANNER
             pyconsole = PyodideConsole(__main__.__dict__)
             import builtins
             async def await_fut(fut):
@@ -95,7 +99,7 @@
         let clear_console = namespace.get("clear_console");
         const echo = (msg, ...opts) => {
           term.echo(prism_format(msg).replace("]]", "&rsqb;&rsqb;"), {
-            finalize: (node) => (node[0].style.marginLeft = "4ch"),
+            finalize: (node) => (node[0].style.marginLeft = "0ch"),
           });
         };
         namespace.destroy();

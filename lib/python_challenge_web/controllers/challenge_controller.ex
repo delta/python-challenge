@@ -40,7 +40,7 @@ defmodule PythonChallengeWeb.ChallengeController do
         Logger.info("User: #{email} #{challenges_completed} challenges completed")
 
         case challenges_completed do
-          20 ->
+          18 ->
             conn
             |> halt()
           _ ->
@@ -61,7 +61,7 @@ defmodule PythonChallengeWeb.ChallengeController do
       email ->
         challenges_completed = Repo.get_by(User, email: email).challenges_completed
         case challenges_completed do
-          20 ->
+          18 ->
             conn
             |> render("completed.html")
           _ ->

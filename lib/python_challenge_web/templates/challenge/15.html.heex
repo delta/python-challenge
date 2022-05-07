@@ -15,9 +15,9 @@ async function initialize(pyodide) {
 <p>
     You have been given an SQLite database file, 'database.db'. It contains three tables related to students their examinations, and their marks in each examination:
     <ol>
-        <li>students (roll_no INTEGER PRIMARY KEY, name TEXT, dept TEXT)</li>
-        <li>exams (id INTEGER PRIMARY KEY, exam_name TEXT, total_marks INTEGER)</li>
-        <li>marks (id INTEGER PRIMARY KEY, exam_id INTEGER, student_id INTEGER, marks INTEGER, exam_date TEXT, FOREIGN KEY(exam_id) REFERENCES exams(id), FOREIGN KEY(student_id) REFERENCES students(roll_no))
+        <li>students (<code class="language-sql">roll_no INTEGER PRIMARY KEY, name TEXT, dept TEXT</code>)</li>
+        <li>exams (<code class="language-sql">id INTEGER PRIMARY KEY, exam_name TEXT, total_marks INTEGER</code>)</li>
+        <li>marks (<code class="language-sql">id INTEGER PRIMARY KEY, exam_id INTEGER, student_id INTEGER, marks INTEGER, exam_date TEXT, FOREIGN KEY(exam_id) REFERENCES exams(id), FOREIGN KEY(student_id) REFERENCES students(roll_no)</code>)
     </ol>
     You have to find top 10 students ordered by the mean of their marks obtained in the exams that they have written in the month of March.
     Construct a string by concatenating the names of these students in order, after stripping off spaces.
