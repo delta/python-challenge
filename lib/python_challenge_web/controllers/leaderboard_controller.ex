@@ -9,7 +9,7 @@ defmodule PythonChallengeWeb.LeaderboardController do
     conn
     |> render(
       "all.html",
-      users: Repo.all(from u in User, order_by: [desc: u.challenges_completed, desc: u.updated_at]),
+      users: Repo.all(from u in User, order_by: [desc: u.challenges_completed, asc: u.updated_at]),
       current_user: conn |> get_session(:email)
     )
   end
@@ -18,7 +18,7 @@ defmodule PythonChallengeWeb.LeaderboardController do
     conn
     |> render(
       "first_year.html",
-      users: Repo.all(from u in User, where: u.is_first_year, order_by: [desc: u.challenges_completed, desc: u.updated_at]),
+      users: Repo.all(from u in User, where: u.is_first_year, order_by: [desc: u.challenges_completed, asc: u.updated_at]),
       current_user: conn |> get_session(:email)
     )
   end
