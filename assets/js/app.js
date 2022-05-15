@@ -6,7 +6,6 @@ const params = new Proxy(new URLSearchParams(window.location.search), {
 	get: (searchParams, prop) => searchParams.get(prop),
 });
 if (params.solution == "incorrect") {
-	console.log("hello");
 	const x = document.querySelector("div#question-panel p.hidden.incorrect");
 	if (x) x.style.display = "block";
 }

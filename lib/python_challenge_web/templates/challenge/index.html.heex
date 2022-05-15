@@ -19,7 +19,7 @@
     #container {
         display: flex;
         flex-direction: row;
-        height: 100%;
+        height: calc(100% - 78px);
         margin-top: 78px;
     }
 
@@ -30,11 +30,15 @@
         padding: 1rem;
     }
 
-    #pyodide-container {
+    #pyodide-wrapper {
         flex: 1;
         overflow: auto;
         --size: 1.5;
         --color: rgba(255, 255, 255, 0.8);
+    }
+
+    #pyodide-container {
+        height: 100%;
     }
 
     @media (max-width: 768px) {
@@ -46,6 +50,73 @@
     #content > :not(:first-child) {
         font-size: 1.5em;
     }
+
+    @keyframes fadeIn { 
+      from { opacity: 0; } 
+    }
+
+    .loader {
+    	position: fixed;
+    	left: 0px;
+    	top: 0px;
+    	width: 100%;
+    	height: 100%;
+    	z-index: 9999;
+      animation: fadeIn 1s infinite alternate;
+      background: url(data:image/png;base64,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) center no-repeat;
+      background-size: 60px 60px;
+    }
+
+    .loader-bg {
+    	position: fixed;
+    	left: 0px;
+    	top: 0px;
+    	width: 100%;
+    	height: 100%;
+    	z-index: 2;
+      background-color: #01a66f;
+    }
+
+    [class^="fullScreen-"] {
+      margin: 2rem 0;
+      padding: 1rem;
+      box-shadow: 0 .125rem .25rem var(--shadowColorFS);
+      position: relative;
+      background-color: var(--bgColorFS) 
+    }
+    [class^="fullScreen-"]:-webkit-full-screen {
+      width: 100%;
+      height: 100%;
+    }
+    
+    [class^="fullScreen_btn"]::-moz-focus-inner {
+      border: 0;
+    }
+    [class^="fullScreen_btn"] {
+      position: absolute;
+      padding: 0.5rem;
+      margin: 1rem;
+      background-color: black;
+      border: 1px solid white;
+      border-radius: 0.24rem;
+      box-shadow: 0 .125rem .25rem var(--shadowColor);
+      z-index: 1;
+      color: white;
+      font-size: inherit;
+      cursor: pointer;
+      right: 0;
+      transition: all .3s;
+    }
+    
+    [class^="fullScreen_svg"] {
+      display: block;
+      width: 1.75rem;
+      height: 1.75rem;
+      fill: currentColor;
+      transition: fill .3s;
+    }
+    .fullScreen_svg-open {}
+    .fullScreen_svg-exit {}
 </style>
 
 <%= render(@challenge_id <> ".html") %>
@@ -100,6 +171,7 @@
         const echo = (msg, ...opts) => {
           term.echo(prism_format(msg).replace("]]", "&rsqb;&rsqb;"), {
             finalize: (node) => (node[0].style.marginLeft = "0ch"),
+            newline: false
           });
         };
         namespace.destroy();
@@ -195,7 +267,7 @@
           },
         });
         window.term = term;
-        pyconsole.stdout_callback = (s) => echo(s, { newline: false });
+        pyconsole.stdout_callback = (s) => echo(s);
         pyconsole.stderr_callback = (s) => {
           term.error(s.trimEnd());
         };
@@ -212,12 +284,14 @@
           await sleep(15);
           term.pause();
         };
+
+        $(".loader-bg").fadeOut("slow")
       }
 
       $.terminal.defaults.formatters.push($.terminal.prism.bind(null, "python"));
       window.console_ready = main();
 </script>
-
+<div class="loader-bg"><div class="loader"></div></div>
 <div id="container">
     <div id="question-panel">
         <div id="content"></div>
@@ -245,5 +319,166 @@
             </button>
         </form>
     </div>
-    <div id="pyodide-container"></div>
+    <div data-fullScreen id="pyodide-wrapper"><div id="pyodide-container"></div></div>
 </div>
+
+<svg style="display:none">
+  <symbol id="icon-fullScreen-open" viewBox="0 0 96 96">
+    <path d="M0 62l12 12 19-19 10 10-19 19 12 12H0V62zm96 34H62l12-12-19-19 10-10 19 19 12-12v34zM34 0L22 12l19 19-10 10-19-19L0 34V0h34zm62 0v34L84 22 65 41 55 31l19-19L62 0h34H0h96z"/>
+  </symbol>
+  <symbol id="icon-fullScreen-exit" viewBox="0 0 96 96">
+    <path d="M96 60L82 74l14 13-8 9-14-14-14 14V60h36zm-60 0v36L22 82 8 96l-8-9 14-13L0 60h36zM0 36h36V0L22 14 9 0 0 9l14 13L0 36zm60 0h36L82 22 96 9l-9-9-13 14L60 0v36z"/>
+  </symbol>
+</svg>
+
+<script>
+var supportsES6 = function() {
+  // https://gist.github.com/bendc/d7f3dbc83d0f65ca0433caf90378cd95
+  try {
+    new Function("(a = 0) => a");
+    return true;
+  } catch (err) {
+    return false;
+  }
+}();
+
+function launchFullWindow(config) {
+
+  "use strict";
+  if (!supportsES6) return false;
+
+  if (!(
+      document.fullscreenEnabled ||
+      document.webkitFullscreenEnabled ||
+      document.mozFullScreenEnabled ||
+      document.msFullscreenEnabled)) return false;
+
+  let cfg = {
+    launchObjSelect: '[data-fullScreen]',
+    launchBtnClass: 'fullScreen_btn',
+    svgClass: 'fullScreen_svg',
+    open: {
+      icon: 'icon-fullScreen-open',
+      extension: '-open',
+      label: 'Launch into full screen',
+      title: 'Full screen'
+    },
+    exit: {
+      icon: 'icon-fullScreen-exit',
+      extension: '-exit',
+      label: 'Exit full screen',
+      title: 'Exit full screen'
+    }
+  };
+
+  Object.assign(cfg, config);
+
+  const svgData = {
+    open: {},
+    exit: {}
+  }
+
+  const setSvgData = (_ => {
+
+    const getData = param => {
+      const symbol = document.getElementById(cfg[param].icon);
+      if (!symbol) return false;
+      svgData[param].class = cfg.svgClass;
+      svgData[param].icon = cfg[param].icon;
+      svgData[param].symbol = symbol.innerHTML;
+      svgData[param].viewBox = symbol.getAttribute('viewBox');
+    };
+
+    getData('open');
+    getData('exit');
+  })();
+
+
+  const _openFullScreen = obj => {
+    if (obj.requestFullscreen) {
+      obj.requestFullscreen();
+    } else if (obj.webkitRequestFullscreen) {
+      obj.webkitRequestFullscreen();
+    } else if (obj.mozRequestFullScreen) {
+      obj.mozRequestFullScreen();
+    } else if (obj.msRequestFullscreen) {
+      obj.msRequestFullscreen();
+    }
+  };
+
+
+  const _exitFullScreen = _ => {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    } else if (document.mozCancelFullScreen) {
+      document.mozCancelFullScreen();
+    } else if (document.msExitFullscreen) {
+      document.msExitFullscreen();
+    }
+  };
+
+
+  const _hasFullScreenElement = _ =>
+    document.fullscreenElement ||
+    document.webkitFullscreenElement ||
+    document.mozFullScreenElement ||
+    document.msFullscreenElement;
+
+
+  const _instantiateLaunchObj = launchObj => {
+
+    const _getCfg = (param, toOpen) => cfg[toOpen ? 'open' : 'exit'][param];
+
+    const _getSvgString = toOpen => {
+      const param = _getCfg('extension', toOpen).substr(1);
+      return `<svg class="${svgData[param].class}" aria-hidden="true" viewbox="${svgData[param].viewBox}">${svgData[param].symbol}</svg>`;
+    }
+
+    const _setBtnAttr = toOpen => {
+      btn.className = cfg.launchBtnClass + _getCfg('extension', toOpen);
+      btn.title = _getCfg('title', toOpen);
+      btn.setAttribute('aria-label', _getCfg('label', toOpen));
+      btn.innerHTML = _getSvgString(toOpen);
+    }
+
+    let btn = launchObj.querySelector('.' + cfg.launchBtnClass);
+    if (!btn) {
+      btn = document.createElement('button');
+      launchObj.prepend(btn);
+    }
+    _setBtnAttr(true);
+
+
+    const _toggleFullScreen = _ => {
+      if (!_hasFullScreenElement()) {
+        _openFullScreen(launchObj);
+      } else {
+        _exitFullScreen();
+      }
+      btn.focus();
+    };
+
+
+    const _onFullscreenChange = _ =>
+      _setBtnAttr(!_hasFullScreenElement());
+
+
+    {
+      btn.addEventListener('click', _toggleFullScreen);
+      document.addEventListener('fullscreenchange', _onFullscreenChange);
+      document.addEventListener('mozfullscreenchange', _onFullscreenChange);
+      document.addEventListener('webkitfullscreenchange', _onFullscreenChange);
+      document.addEventListener("MSFullscreenChange", _onFullscreenChange);
+    }
+
+  }
+  const objs = document.querySelectorAll(cfg.launchObjSelect);
+  for (const obj of objs) {
+    _instantiateLaunchObj(obj);
+  }
+
+}
+launchFullWindow();
+</script>

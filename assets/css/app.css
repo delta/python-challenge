@@ -53,7 +53,7 @@ body {
 }
 
 .header {
-  box-shadow: 1px 1px 4px 0 rgba(0,0,0,.1);
+  box-shadow: 1px 1px 40px 0 rgba(0,0,0,.1);
   background-color: #01a66f;
   position: fixed;
   width: 100%;
