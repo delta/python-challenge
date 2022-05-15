@@ -169,10 +169,7 @@
         let pyconsole = namespace.get("pyconsole");
         let clear_console = namespace.get("clear_console");
         const echo = (msg, ...opts) => {
-          term.echo(prism_format(msg).replace("]]", "&rsqb;&rsqb;"), {
-            finalize: (node) => (node[0].style.marginLeft = "0ch"),
-            newline: false
-          });
+          term.echo(prism_format(msg).replace("]]", "&rsqb;&rsqb;"), ...opts);
         };
         namespace.destroy();
 
@@ -221,7 +218,7 @@
                 );
               }
               if (pyodide.isPyProxy(value)) {
-                term.echo('\n', {newline: false});
+                echo('\n', {newline: false});
                 value.destroy();
               }
             } catch (e) {
@@ -268,7 +265,7 @@
           },
         });
         window.term = term;
-        pyconsole.stdout_callback = (s) => echo(s);
+        pyconsole.stdout_callback = (s) => echo(s, {newline: false});
         pyconsole.stderr_callback = (s) => {
           term.error(s.trimEnd());
         };

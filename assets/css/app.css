@@ -178,6 +178,7 @@ li .link {
 	letter-spacing: 2px;
 	position: relative;
 	transition: all 0.3s 0.2s ease;
+  display: block;
 }
 li .link:last-child {
 	margin-right: 0;
