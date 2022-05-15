@@ -170,7 +170,7 @@ body {
   }
 }
 
-.link {
+li .link {
 	color: white;
 	text-transform: uppercase;
 	font-weight: 500;
@@ -179,10 +179,10 @@ body {
 	position: relative;
 	transition: all 0.3s 0.2s ease;
 }
-.link:last-child {
+li .link:last-child {
 	margin-right: 0;
 }
-.link:before {
+li .link:before {
 	content: "";
 	position: absolute;
 	width: 0px;
@@ -193,11 +193,11 @@ body {
 	transition: all 0.4s cubic-bezier(0.82, 0.02, 0.13, 1.26);
 	left: 100%;
 }
-.link:hover {
+li .link:hover {
 	opacity: 1;
 	color: #fdfdfd;
 }
-.link:hover:before {
+li .link:hover:before {
 	width: 40px;
 	left: 0;
 }
