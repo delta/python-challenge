@@ -21,8 +21,8 @@ async function initialize(pyodide) {
     <li>marks (<code class="language-sql">id INTEGER PRIMARY KEY, exam_id INTEGER, student_id INTEGER, marks INTEGER, exam_date TEXT, FOREIGN KEY(exam_id) REFERENCES exams(id), FOREIGN KEY(student_id) REFERENCES students(roll_no)</code>)
 </ol>
 <p>
-    You have to find top 10 students ordered by the mean of their marks obtained in the exams that they have written in the month of March.
-    Construct a string by concatenating the names of these students in order, after stripping off spaces.
+    You have to find top 10 students from CSE, ECE, EEE and ICE ordered by the mean of their marks obtained in the MATH exams that they have written in the month of March.
+    Construct a string by concatenating the names of these students by the decreasing order of their roll_no, after stripping off spaces.
     The answer is the SHA256 hash of this string.
     <br>
     Hint: You can work with the database file using the <a href="https://docs.python.org/3/library/sqlite3.html">sqlite3</a> library.
