@@ -360,8 +360,8 @@
     </div>
     <div id="solutions-panel">
         <h1> Submitted Solutions </h1>
+        <h4>Shortest solution ranks on top (Heard of <a href="https://en.wikipedia.org/wiki/Code_golf">Code Golf</a>?)</h4>
         <hr>
-        <br>
         <%= for solution <- @solutions do %>
         <pre><code class="language-python"><%= solution.solution %></code></pre>
         <b>Submitted by:</b> <%= solution.name %>

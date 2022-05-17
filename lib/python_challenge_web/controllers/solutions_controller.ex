@@ -26,6 +26,10 @@ defmodule PythonChallengeWeb.SolutionsController do
                     order_by: [desc: s.updated_at]
                 )
 
+              solutions =
+                solutions
+                |> Enum.sort_by(&(String.length(&1.solution)), :asc)
+
               user_solution =
                 solutions
                 |> Enum.find(
