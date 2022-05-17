@@ -4,7 +4,7 @@ async function initialize(pyodide) {
     import micropip
     await micropip.install('numpy')
     await micropip.install(
-        './challenge/wheel/numerical-1.0.0-py3-none-any.whl'
+        './challenge/wheel/13/numerical-1.0.0-py3-none-any.whl'
     )
     from numerical.numerical import *
     `);
@@ -12,6 +12,7 @@ async function initialize(pyodide) {
 <h1>
     Challenge 13
 </h1>
+<br>
 <p>
     You are given a matrix <code class="language-python">my_matrix</code> in the interpreter. Compute the
     Special Sum of the matrix. The special sum of a square matrix is

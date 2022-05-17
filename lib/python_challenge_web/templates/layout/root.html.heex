@@ -26,8 +26,13 @@
         <%= if Plug.Conn.get_session(@conn, :email) == nil do %>
             <li><a href={Routes.auth_path(@conn, :login)} class="link">Login</a></li>
         <% else %>
+          <%= if System.get_env("PHASE") == "challenge" do %>
             <li><a href={Routes.challenge_path(@conn, :index)} class="link">Challenges</a></li>
-            <li><a href={Routes.auth_path(@conn, :logout)} class="link">Logout</a></li>
+          <% end %>
+          <%= if System.get_env("PHASE") == "solution" do %>
+            <li><a href={Routes.solutions_path(@conn, :index)} class="link">Solutions</a></li>
+          <% end %>
+          <li><a href={Routes.auth_path(@conn, :logout)} class="link">Logout</a></li>
         <% end %>
       </ul>
     </header>

@@ -27,25 +27,29 @@ defmodule PythonChallengeWeb.ChallengeController do
     end
   end
 
-  def wheel(conn, _params) do
+  def wheel(conn, %{"name" => name, "challenge" => challenge}) do
     require Logger
-
     case conn |> get_session(:email) do
       nil ->
         Logger.info("User is not logged in")
         conn
         |> redirect(to: conn |> Routes.auth_path(:login))
       email ->
-        challenges_completed = Repo.get_by(User, email: email).challenges_completed
-        Logger.info("User: #{email} #{challenges_completed} challenges completed")
+        if System.get_env("PHASE") === "solution" do
+          conn
+          |> send_download({:file, "wheels/#{challenge}/#{name}"})
+        else
+          challenges_completed = Repo.get_by(User, email: email).challenges_completed
+          Logger.info("User: #{email} #{challenges_completed} challenges completed")
 
-        case challenges_completed do
-          18 ->
-            conn
-            |> halt()
-          _ ->
-            conn
-            |> send_download({:file, "wheels/#{challenges_completed + 1}.whl"})
+          case challenges_completed do
+            18 ->
+              conn
+              |> halt()
+            _ ->
+              conn
+              |> send_download({:file, "wheels/#{challenges_completed + 1}/#{name}"})
+          end
         end
     end
   end
@@ -69,9 +73,11 @@ defmodule PythonChallengeWeb.ChallengeController do
             if solution === user_solution do
               Logger.info("User #{email} submitted correct solution to chall #{challenges_completed + 1}")
 
-              Repo.get_by(User, email: email)
-              |> Ecto.Changeset.change(%{challenges_completed: challenges_completed + 1})
-              |> Repo.update()
+              if System.get_env("PHASE") === "challenge" do
+                Repo.get_by(User, email: email)
+                |> Ecto.Changeset.change(%{challenges_completed: challenges_completed + 1})
+                |> Repo.update()
+              end
 
               conn
               |> redirect(to: conn |> Routes.challenge_path(:index, solution: "correct"))

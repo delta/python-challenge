@@ -3,7 +3,7 @@ async function initialize(pyodide) {
     await pyodide.runPythonAsync(`
     import micropip
     await micropip.install(
-        './challenge/wheel/prime-1.0.0-py3-none-any.whl'
+        './challenge/wheel/4/prime-1.0.0-py3-none-any.whl'
     )
     from prime.prime import *
     `);
@@ -11,6 +11,7 @@ async function initialize(pyodide) {
 <h1>
     Challenge 4
 </h1>
+<br>
 <p>
     There's a list called <code class="language-python">numlist</code> available in the interpreter. Find the only prime number in <code class="language-python">numlist</code>.
 </p>

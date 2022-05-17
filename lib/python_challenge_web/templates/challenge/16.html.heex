@@ -3,7 +3,7 @@ async function initialize(pyodide) {
     await pyodide.runPythonAsync(`
     import micropip
     await micropip.install(
-      './challenge/wheel/classes-1.0.0-py3-none-any.whl'
+      './challenge/wheel/16/classes-1.0.0-py3-none-any.whl'
     )
     from classes.classes import *
     `);
@@ -11,6 +11,7 @@ async function initialize(pyodide) {
 <h1>
     Challenge 16
 </h1>
+<br>
 <p>
   Classes are a pleasure until they are not (Inheritance is a pain). So,
   can you figure out the inheritance chain for the class "TQwUJ", and give us the
