@@ -1,0 +1,396 @@
+<script src="https://code.jquery.com/jquery-latest.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery.terminal/js/jquery.terminal.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/jquery.terminal/css/jquery.terminal.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/pyodide/v0.20.0/full/pyodide.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/jquery.terminal@2.33.2/css/jquery.terminal.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/themes/prism.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/prism.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/components/prism-python.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery.terminal/js/prism.js"></script>
+<style>
+    html,
+    body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    #container {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        height: calc(100% - 78px);
+        margin-top: 78px;
+    }
+
+    #question-panel {
+        background-color: azure;
+        flex: 1;
+        overflow: auto;
+        padding: 1rem;
+    }
+
+    #solutions-panel {
+        flex: 1;
+        overflow: auto;
+        padding: 1rem;
+        background-color: #01a66faa;
+        color: white;
+    }
+    
+    #question-panel a {
+        text-decoration: underline;
+    }
+
+    #pyodide-container {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        width: 50%;
+        height: 50%;
+        z-index: 1100;
+        --size: 1.5;
+        --color: rgba(255, 255, 255, 0.8);
+    }
+
+    @media (max-width: 768px) {
+        #container {
+            flex-direction: column;
+        }
+        #pyodide-container {
+            width: 100%;
+        }
+    }
+
+    #content > :not(:first-child) {
+        font-size: 1.5em;
+    }
+
+    @keyframes fadeIn { 
+      from { opacity: 0; } 
+    }
+
+    .loader {
+    	position: fixed;
+    	left: 0px;
+    	top: 0px;
+    	width: 100%;
+    	height: 100%;
+    	z-index: 9999;
+      animation: fadeIn 1s infinite alternate;
+      background: url(data:image/png;base64,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) center no-repeat;
+      background-size: 60px 60px;
+    }
+
+    .loader-bg {
+    	position: fixed;
+    	left: 0px;
+    	top: 0px;
+    	width: 100%;
+    	height: 100%;
+    	z-index: 200;
+      background-color: #01a66f;
+    }
+
+    #show-terminal {
+        float: right;
+        top: 15px;
+        right: 20px;
+    }
+
+    #close-terminal {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        z-index: 100;
+        color: white;
+        background-color: black;
+        outline: 1px solid white;
+        padding: 5px;
+        cursor: pointer;
+    }
+
+    form {
+        display: inline-block;
+    }
+
+    hr {
+        border: 1px solid white;
+    }
+</style>
+
+<%= render(ChallengeView,  @challenge_id <> ".html") %>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.41.0/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.41.0/mode/python/python.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.41.0/codemirror.min.css" rel="stylesheet" />
+
+<script type="text/javascript">
+      function sleep(s) {
+        return new Promise((resolve) => setTimeout(resolve, s));
+      }
+
+      function prism_format(code) {
+        code = $.terminal.escape_brackets(code);
+        code = $.terminal.prism("python", code);
+        return code;
+      }
+
+      async function main() {
+        let term;
+        globalThis.pyodide = await loadPyodide({
+          stdin: () => {
+            let result = prompt();
+            echo(result);
+            return result;
+          },
+        });
+        let namespace = pyodide.globals.get("dict")();
+        await pyodide.loadPackage("micropip");
+        initialize(pyodide);
+        pyodide.runPython(
+          `
+            import sys
+            from pyodide import to_js
+            from pyodide.console import PyodideConsole, repr_shorten, BANNER
+            import __main__
+            BANNER = "Welcome to the Python Challenge Interpreter 🐍\\n" + BANNER
+            pyconsole = PyodideConsole(__main__.__dict__)
+            import builtins
+            async def await_fut(fut):
+              res = await fut
+              if res is not None:
+                builtins._ = res
+              return to_js([res], depth=1)
+            def clear_console():
+              pyconsole.buffer = []
+        `,
+          { globals: namespace }
+        );
+        let repr_shorten = namespace.get("repr_shorten");
+        let banner = namespace.get("BANNER");
+        let await_fut = namespace.get("await_fut");
+        let pyconsole = namespace.get("pyconsole");
+        let clear_console = namespace.get("clear_console");
+        const echo = (msg, ...opts) => {
+          term.echo(prism_format(msg).replace("]]", "&rsqb;&rsqb;"), ...opts);
+        };
+        namespace.destroy();
+
+        let ps1 = ">>> ",
+          ps2 = "... ";
+
+        async function lock() {
+          let resolve;
+          let ready = term.ready;
+          term.ready = new Promise((res) => (resolve = res));
+          await ready;
+          return resolve;
+        }
+
+        async function interpreter(command) {
+          let unlock = await lock();
+          term.pause();
+          // multiline should be split (useful when pasting)
+          for (const c of command.split("\n")) {
+            let fut = pyconsole.push(c);
+            term.set_prompt(fut.syntax_check === "incomplete" ? ps2 : ps1);
+            switch (fut.syntax_check) {
+              case "syntax-error":
+                term.error(fut.formatted_error.trimEnd());
+                continue;
+              case "incomplete":
+                continue;
+              case "complete":
+                break;
+              default:
+                throw new Error(`Unexpected type ${ty}`);
+            }
+            // In JavaScript, await automatically also awaits any results of
+            // awaits, so if an async function returns a future, it will await
+            // the inner future too. This is not what we want so we
+            // temporarily put it into a list to protect it.
+            let wrapped = await_fut(fut);
+            // complete case, get result / error and print it.
+            try {
+              let [value] = await wrapped;
+              if (value !== undefined) {
+                echo(
+                  repr_shorten.callKwargs(value, {
+                    separator: "\n...<output truncated>...\n",
+                  })
+                );
+              }
+              if (pyodide.isPyProxy(value)) {
+                echo('\n', {newline: false});
+                value.destroy();
+              }
+            } catch (e) {
+              if (e.constructor.name === "PythonError") {
+                const message = fut.formatted_error || e.message;
+                term.error(message.trimEnd());
+              } else {
+                throw e;
+              }
+            } finally {
+              fut.destroy();
+              wrapped.destroy();
+            }
+          }
+          term.resume();
+          await sleep(10);
+          unlock();
+        }
+
+        term = $("#pyodide-container").terminal(interpreter, {
+          greetings: banner,
+          prompt: ps1,
+          completionEscape: false,
+          completion: function (command, callback) {
+            callback(pyconsole.complete(command).toJs()[0]);
+          },
+          enabled: false,
+          keymap: {
+            "CTRL+C": async function (event, original) {
+              clear_console();
+              term.enter();
+              echo("KeyboardInterrupt");
+              term.set_command("");
+              term.set_prompt(ps1);
+            },
+            TAB: (event, original) => {
+              const command = term.before_cursor();
+              // Disable completion for whitespaces.
+              if (command.trim() === "") {
+                term.insert("\t");
+                return false;
+              }
+              return original(event);
+            },
+          },
+        });
+        window.term = term;
+        pyconsole.stdout_callback = (s) => echo(s, {newline: false});
+        pyconsole.stderr_callback = (s) => {
+          term.error(s.trimEnd());
+        };
+        term.ready = Promise.resolve();
+        pyodide._api.on_fatal = async (e) => {
+          term.error(
+            "Pyodide has suffered a fatal error. Please report this to the Pyodide maintainers."
+          );
+          term.error("The cause of the fatal error was:");
+          term.error(e);
+          term.error("Look in the browser console for more details.");
+          await term.ready;
+          term.pause();
+          await sleep(15);
+          term.pause();
+        };
+
+        $(".loader-bg").fadeOut("slow")
+      }
+
+      $.terminal.defaults.formatters.push($.terminal.prism.bind(null, "python"));
+      window.console_ready = main();
+</script>
+<div class="loader-bg"><div class="loader"></div></div>
+<div id="container">
+    <div id="question-panel">
+        <button id="show-terminal">Show Terminal</button>
+        <div id="content"></div>
+
+        <br>
+        <h2> Your Solution </h2>
+        <br>
+        <p> Share your solution here: (You can explain your approach in python comments) </p>
+        <br>
+        <textarea id="editor"><%= if @user_solution == nil do %># Your solution here<% else %><%= @user_solution %><% end %></textarea>
+        <br>
+        <form id="form" method="post" action={Routes.solutions_path(@conn, :submit)}>
+            <input
+                type="hidden"
+                name="solution"
+                value={@user_solution}
+            />
+            <input
+                type="hidden"
+                name="id"
+                value={@challenge_id}
+            />
+            <input
+                type="hidden"
+                name="_csrf_token"
+                value={get_csrf_token()}
+            />
+            <button
+                id="submit"
+                type="submit"
+            >
+                Submit
+            </button>
+        </form>
+        <form id="form" method="post" action={Routes.solutions_path(@conn, :submit)}>
+            <input
+                type="hidden"
+                name="solution"
+                value=""
+            />
+            <input
+                type="hidden"
+                name="id"
+                value={@challenge_id}
+            />
+            <input
+                type="hidden"
+                name="_csrf_token"
+                value={get_csrf_token()}
+            />
+            <button
+                id="submit"
+                type="submit"
+            >
+                Delete
+            </button>
+        </form>
+        <br><br><br>
+        <a href={Routes.solutions_path(@conn, :index)}>Back to all solutions</a>
+    </div>
+    <div id="solutions-panel">
+        <h1> Submitted Solutions </h1>
+        <h4>Shortest solution ranks on top (Heard of <a href="https://en.wikipedia.org/wiki/Code_golf">Code Golf</a>?)</h4>
+        <hr>
+        <%= for solution <- @solutions do %>
+        <pre><code class="language-python"><%= solution.solution %></code></pre>
+        <b>Submitted by:</b> <%= solution.name %>
+        <hr>
+        <% end %>
+    </div>
+</div>
+<div id="pyodide-container">
+    <button id="close-terminal">&times;</button>
+</div>
+<script>
+let focus = false;
+$("#show-terminal").click(function () {
+  $("#pyodide-container").slideToggle('fast');
+  window.term.focus(focus = !focus);
+  window.term.attr({
+      scrollTop: window.term.attr("scrollHeight")
+  });
+});
+
+$("#close-terminal").click(function () {
+    $("#pyodide-container").slideToggle('fast');
+});
+
+$("#pyodide-container").hide();
+
+const editor = CodeMirror.fromTextArea(document.getElementById('editor'), {lineNumbers: true, mode: "python"});
+editor.on('change', (editor) => {
+    const text = editor.doc.getValue()
+    $("#form input[name='solution']").val(text)
+});
+</script>

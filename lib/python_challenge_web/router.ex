@@ -6,7 +6,7 @@ defmodule PythonChallengeWeb.Router do
     plug :fetch_session
     plug :fetch_live_flash
     plug :put_root_layout, {PythonChallengeWeb.LayoutView, :root}
-    # plug :protect_from_forgery
+    plug :protect_from_forgery
     plug :put_secure_browser_headers
   end
 
@@ -29,7 +29,7 @@ defmodule PythonChallengeWeb.Router do
   scope "/challenge", PythonChallengeWeb do
     pipe_through :browser
     get "/", ChallengeController, :index
-    get "/wheel/:id", ChallengeController, :wheel
+    get "/wheel/:challenge/:name", ChallengeController, :wheel
     post "/submit", ChallengeController, :submit
   end
 
@@ -37,6 +37,12 @@ defmodule PythonChallengeWeb.Router do
     pipe_through :browser
     get "/all", LeaderboardController, :all
     get "/first-year", LeaderboardController, :first_year
+  end
+
+  scope "/solutions", PythonChallengeWeb do
+    pipe_through :browser
+    get "/", SolutionsController, :index
+    post "/", SolutionsController, :submit
   end
 
   # Other scopes may use custom stacks.

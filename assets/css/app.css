@@ -57,7 +57,7 @@ body {
   background-color: #01a66f;
   position: fixed;
   width: 100%;
-  z-index: 3;
+  z-index: 1000;
 }
 
 .header ul {
@@ -135,7 +135,7 @@ body {
 }
 
 .header .menu-btn:checked ~ .menu {
-  max-height: 240px;
+  max-height: 500px;
 }
 
 .header .menu-btn:checked ~ .menu-icon .navicon {
@@ -155,7 +155,7 @@ body {
   top: 0;
 }
 
-@media (min-width: 60em) {
+@media (min-width: 70em) {
   .header li {
     float: left;
     padding: 30px 30px;

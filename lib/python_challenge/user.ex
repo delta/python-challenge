@@ -14,7 +14,7 @@ defmodule PythonChallenge.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:name, :roll_number, :is_first_year, :challenges_completed])
-    |> validate_required([:name, :roll_number, :is_first_year, :challenges_completed])
+    |> cast(attrs, [:name, :email, :is_first_year, :challenges_completed])
+    |> validate_required([:name, :email, :is_first_year, :challenges_completed])
   end
 end
