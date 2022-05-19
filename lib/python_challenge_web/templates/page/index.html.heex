@@ -574,11 +574,19 @@
 
             <div class="text">
                 <article>
-                    <p>You think you are good at programming ? <br>Good Luck. </p>
+                    <%= if System.get_env("PHASE") === "challenge" do %>
+                        <p>You think you are good at programming ? <br>Good Luck. </p>
+                    <% else %>
+                        <p>The challenge has ended, view and share your solutions now!</p>
+                    <% end %>
                     <%= if Plug.Conn.get_session(@conn, :email) == nil do %>
                         <a href={Routes.auth_path(@conn, :login)} class="link"><button>Get started!</button></a>
                     <% else %>
-                        <a href={Routes.challenge_path(@conn, :index)} class="link"><button>Get started!</button></a>
+                        <%= if System.get_env("PHASE") === "challenge" do %>
+                            <a href={Routes.challenge_path(@conn, :index)} class="link"><button>Get started!</button></a>
+                        <% else %>
+                            <a href={Routes.solutions_path(@conn, :index)} class="link"><button>Go to Solutions</button></a>
+                        <% end %>
                     <% end %>
                 </article>
             </div>
