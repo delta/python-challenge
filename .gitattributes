@@ -1,0 +1,4 @@
+challenge-files/** linguist-vendored
+*.html linguist-vendored
+*.ex diff=elixir
+*.exs diff=elixir
