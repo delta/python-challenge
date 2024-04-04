@@ -4,7 +4,7 @@ import Config
 config :python_challenge, PythonChallenge.Repo,
   username: "postgres",
   password: "postgres",
-  hostname: "localhost",
+  hostname: "db",
   database: "python_challenge_dev",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,

@@ -37,7 +37,7 @@ defmodule PythonChallengeWeb.AuthController do
                 email: email,
                 name: name,
                 challenges_completed: 0,
-                is_first_year: year == "21"
+                is_first_year: year == "23"
               })
             end
 
