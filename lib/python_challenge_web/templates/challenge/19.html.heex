@@ -5,7 +5,7 @@ async function initialize(pyodide) {
     import json
     async def ask(s):
         from js import window
-        url = f"http://delta.nitt.edu/python-challenge/chall19/verify?" + urllib.parse.urlencode({'input': s})
+        url = f"https://delta.nitt.edu/python-challenge/chall19/verify?" + urllib.parse.urlencode({'input': s})
         secret =  await window.fetch(url)
         secret = await secret.text()
         print(secret)
