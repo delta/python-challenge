@@ -16,7 +16,7 @@ services:
       context: .
       dockerfile: Dockerfile.chall19
     ports:
-      - '4045:8000'
+      - '4048:8000'
     depends_on:
       - phoenix
 

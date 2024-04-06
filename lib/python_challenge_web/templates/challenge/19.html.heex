@@ -3,9 +3,9 @@ async function initialize(pyodide) {
     await pyodide.runPythonAsync(`
     import urllib.parse
     import json
-    async def escape(s):
+    async def ask(s):
         from js import window
-        url = f"http://localhost:4045?" + urllib.parse.urlencode({'input': s})
+        url = f"http://localhost:4048?" + urllib.parse.urlencode({'input': s})
         secret =  await window.fetch(url)
         secret = await secret.text()
         print(secret)
@@ -16,7 +16,17 @@ async function initialize(pyodide) {
 </h1>
 <br>
 <p>
-    Should work now we are so close
+    Bob has a secret Alice wants to know.Bob decides to hide it in a script and block the characters from being used to annoy Alice. Help Alice outsmart Bob and get the secret.
+    <br/>
+    <code class="language-python">
+        blacklisted = ["bdefgijklmnopstuvxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789./,<>_;:~!@#$%^&[]{}"] <br/>
+        secret = r"SECRET WHICH BOB WONT SHARE" <br/>
+        for char in inp: <br/>
+            &emsp;if char in blacklisted: <br/>
+            &emsp;&emsp;return 'I dont know what you are talking about' <br/>
+        return eval(eval(inp)) <br/>
+    </code>
+    <b>Hint: </b> Try running <b>await ask("alice's smart words")</b> to get the secret.
 </p>
     `)
 }
