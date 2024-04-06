@@ -20,19 +20,26 @@ class myHandler(http.server.SimpleHTTPRequestHandler):
             query_params = parse_qs(parsed_path.query)
             giveninp = query_params['input'][0]
             escaped = escape(unquote(giveninp))
+            print(escaped)
             self.send_response(200)
             self.send_header("Content-type", "application/json")
+            self.send_header("Access-Control-Allow-Origin", "*") # Allows access from any origin
+            self.send_header("Access-Control-Allow-Methods", "GET, OPTIONS") # Specifies the methods allowed when accessing the resource
+            self.send_header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type") # Necessary if your API clients need to set custom headers in their requests
             self.end_headers()
             json_string = json.dumps({"message": escaped})
             self.wfile.write(json_string.encode())
         except:
             self.send_response(400)
             self.send_header("Content-type", "application/json")
+            self.send_header("Access-Control-Allow-Origin", "*") # Allows access from any origin
+            self.send_header("Access-Control-Allow-Methods", "GET, OPTIONS") # Specifies the methods allowed when accessing the resource
+            self.send_header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type") # Necessary if your API clients need to set custom headers in their requests
             self.end_headers()
             json_string = json.dumps({"message": "Invalid input"})
             self.wfile.write(json_string.encode())
 
 handler = myHandler
-httpd = socketserver.TCPServer(("", PORT), handler)
+httpd = socketserver.TCPServer(("0.0.0.0", PORT), handler,True)
 httpd.serve_forever()
         
