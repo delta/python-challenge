@@ -10,6 +10,16 @@ services:
       - '4000:4000'
     depends_on:
       - db
+
+  chall19:
+    build:
+      context: .
+      dockerfile: Dockerfile.chall19
+    ports:
+      - '4045:8000'
+    depends_on:
+      - phoenix
+
   db:
     image: postgres:14.2-alpine
     environment:
@@ -19,6 +29,7 @@ services:
     restart: always
     volumes:
       - pgdata:/var/lib/postgresql/data
+  
 
 volumes:
   pgdata:

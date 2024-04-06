@@ -1,0 +1,23 @@
+<script type="text/javascript">
+async function initialize(pyodide) {
+    await pyodide.runPythonAsync(`
+    import urllib.parse
+    import json
+    async def escape(s):
+        from js import window
+        url = f"http://localhost:{4045}/?" + urllib.parse.urlencode({'input': s})
+        secret =  await window.fetch(url)
+        secret = await secret.text()
+        print(secret)
+    `);
+    $('#content').html(`
+<h1>
+    Challenge 19
+</h1>
+<br>
+<p>
+    Should work now we are so close
+</p>
+    `)
+}
+</script>
