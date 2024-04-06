@@ -1,3 +1,10 @@
+import http.server
+import socketserver
+from urllib.parse import unquote
+import json
+
+PORT = 8000
+
 def escape(inp):
     blacklisted = ["bdefgijklmnopstuvxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789./,<>_;:~!@#$%^&[]{}"]
     secret = r"1_7H1NK_U_C4N_8EC0M3_A_CTF_3XP3RT"
@@ -6,39 +13,35 @@ def escape(inp):
             return 'I dont know what you are talking about'
     return eval(eval(inp))
 
-import http.server
-import socketserver
-from urllib.parse import urlparse, parse_qs, unquote
-import json
-
-PORT = 8000
-
 class myHandler(http.server.SimpleHTTPRequestHandler):
-    def do_GET(self):
+    def do_POST(self):  # Changed from do_GET to do_POST
+        content_length = int(self.headers['Content-Length'])
+        post_data = self.rfile.read(content_length)
+        
         try:
-            parsed_path = urlparse(self.path)
-            query_params = parse_qs(parsed_path.query)
-            giveninp = query_params['input'][0]
+            data = json.loads(post_data.decode('utf-8'))
+            giveninp = data['input']
             escaped = escape(unquote(giveninp))
             self.send_response(200)
             self.send_header("Content-type", "application/json")
-            self.send_header("Access-Control-Allow-Origin", "*") # Allows access from any origin
-            self.send_header("Access-Control-Allow-Methods", "GET, OPTIONS") # Specifies the methods allowed when accessing the resource
-            self.send_header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type") # Necessary if your API clients need to set custom headers in their requests
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Access-Control-Allow-Methods", "POST, OPTIONS")
+            self.send_header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type")
             self.end_headers()
+            
             json_string = json.dumps({"message": escaped})
             self.wfile.write(json_string.encode())
-        except:
+        
+        except Exception as e:
             self.send_response(400)
             self.send_header("Content-type", "application/json")
-            self.send_header("Access-Control-Allow-Origin", "*") # Allows access from any origin
-            self.send_header("Access-Control-Allow-Methods", "GET, OPTIONS") # Specifies the methods allowed when accessing the resource
-            self.send_header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type") # Necessary if your API clients need to set custom headers in their requests
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Access-Control-Allow-Methods", "POST, OPTIONS")
+            self.send_header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type")
             self.end_headers()
-            json_string = json.dumps({"message": "Invalid input"})
+            
+            json_string = json.dumps({"message": "I dont know what you are talking about"})
             self.wfile.write(json_string.encode())
 
-handler = myHandler
-httpd = socketserver.TCPServer(("0.0.0.0", PORT), handler,True)
+httpd = socketserver.TCPServer(("0.0.0.0", PORT), myHandler)
 httpd.serve_forever()
-        
