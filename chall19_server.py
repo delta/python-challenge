@@ -40,7 +40,7 @@ class myHandler(http.server.SimpleHTTPRequestHandler):
             self.send_header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type")
             self.end_headers()
             
-            json_string = json.dumps({"message": "I dont know what you are talking about"})
+            json_string = json.dumps({"message": "Wow something weird but not what I was looking for"})
             self.wfile.write(json_string.encode())
 
 httpd = socketserver.TCPServer(("0.0.0.0", PORT), myHandler)
