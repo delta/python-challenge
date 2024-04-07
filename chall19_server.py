@@ -6,7 +6,7 @@ import json
 PORT = 8000
 
 def escape(inp):
-    blacklisted = ["bdefgijklmnopstuvxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789./,<>_;:~!@#$%^&[]{}"]
+    blacklisted = "bdefgijklmnopstuvxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789./,<>_;:~!@#$%^&[]{}"
     secret = r"1_7H1NK_U_C4N_8EC0M3_A_CTF_3XP3RT"
     for char in inp:
         if char in blacklisted:
@@ -14,7 +14,7 @@ def escape(inp):
     return eval(eval(inp))
 
 class myHandler(http.server.SimpleHTTPRequestHandler):
-    def do_POST(self):  # Changed from do_GET to do_POST
+    def do_POST(self):
         content_length = int(self.headers['Content-Length'])
         post_data = self.rfile.read(content_length)
         

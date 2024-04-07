@@ -19,7 +19,7 @@ async function initialize(pyodide) {
     Bob has a secret Alice wants to know.Bob decides to hide it in a script and block the characters from being used to annoy Alice. Help Alice outsmart Bob and get the secret.
     <br/>
     <code class="language-python">
-        blacklisted = ["bdefgijklmnopstuvxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789./,<>_;:~!@#$%^&[]{}"] <br/>
+        blacklisted = "bdefgijklmnopstuvxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789./,<>_;:~!@#$%^&[]{}" <br/>
         secret = r"SECRET WHICH BOB WONT SHARE" <br/>
         for char in inp: <br/>
             &emsp;if char in blacklisted: <br/>
