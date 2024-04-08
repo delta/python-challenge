@@ -18,7 +18,7 @@ defmodule PythonChallengeWeb.SolutionsController do
 
         email ->
           case Integer.parse(challenge_id_string) do
-            {challenge_id, ""} when challenge_id > 0 and challenge_id <= 18 ->
+            {challenge_id, ""} when challenge_id > 0 and challenge_id <= 19 ->
               solutions =
                 Repo.all(
                   from s in Solution,
@@ -87,7 +87,7 @@ defmodule PythonChallengeWeb.SolutionsController do
 
         _ ->
           case Integer.parse(challenge_id) do
-            {challenge_id, ""} when challenge_id > 0 and challenge_id <= 18 ->
+            {challenge_id, ""} when challenge_id > 0 and challenge_id <= 19 ->
               Repo.insert!(
                 %PythonChallenge.Solution{
                   challenge: challenge_id,
